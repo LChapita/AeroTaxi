@@ -4,5 +4,6 @@ public class Main {
         System.out.println("Lucas");
         System.out.println("macacooooo");
         System.out.println("tengo un hambre");
+        System.out.println("prueba intelliJ");
     }
 }
