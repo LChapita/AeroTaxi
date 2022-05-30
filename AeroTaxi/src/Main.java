@@ -8,21 +8,28 @@ public class Main {
         System.out.println("AeroTaxi");
         System.out.println("verificar 1");
         File clientesFile = new File("baseClientes.txt");
-        nuevoUsuario(clientesFile);
+        Usuario usuario1 = new Usuario("Lucas", "Chapa", 12345678, 25);
+        Usuario usuario2 = new Usuario("Bruno", "Gregorio", 98765432, 26);
+
+        ArrayList<Usuario> usuarioArrayList=new ArrayList<>();
+        usuarioArrayList.add(usuario1);
+        usuarioArrayList.add(usuario2);
+
+        nuevoUsuario(clientesFile,usuarioArrayList);
+
         leerUsuarios(clientesFile);
 
     }
 
-    public static void nuevoUsuario(File clientesFile) {
+    public static void nuevoUsuario(File clientesFile,ArrayList usuarios) {
 
         try {
             BufferedWriter salida = new BufferedWriter(new FileWriter(clientesFile));
-            Usuario usuario1 = new Usuario("Lucas", "Chapa", 12345678, 25);
-            salida.write(String.valueOf(usuario1));
+            salida.write(String.valueOf(usuarios));
             salida.close();
         } catch (IOException e) {
             System.out.println("error");
-        }
+        }///poner finally
     }
 
     public static void leerUsuarios(File clientesFile) {
