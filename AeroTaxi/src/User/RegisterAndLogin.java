@@ -3,6 +3,8 @@ package User;
 
 import com.google.gson.Gson;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -23,22 +25,22 @@ public final class RegisterAndLogin{
                 System.out.println("Name: ");
                 user.setName(scanner.nextLine());
 
-                TimeUnit.MILLISECONDS.sleep(1);
+                TimeUnit.MILLISECONDS.sleep(10);
 
                 System.out.println("Surname: ");
                 user.setSurname(scanner.nextLine());
 
-                TimeUnit.MILLISECONDS.sleep(1);
+                TimeUnit.MILLISECONDS.sleep(10);
 
                 System.out.println("Dni: ");
                 user.setDni(scanner.nextInt());
 
-                TimeUnit.MILLISECONDS.sleep(1);
+                TimeUnit.MILLISECONDS.sleep(10);
 
                 System.out.println("Age: ");
                 user.setAge(scanner.nextInt()); // si llegó a agregar la edad, se terminó de crear el usuario con sus datos administrativos
 
-                TimeUnit.MILLISECONDS.sleep(1);
+                TimeUnit.MILLISECONDS.sleep(10);
 
             } catch (InputMismatchException e){
                 System.out.println("try it again");
@@ -64,7 +66,7 @@ public final class RegisterAndLogin{
                 user.setPassword(scanner.nextLine());
 
 
-                TimeUnit.MILLISECONDS.sleep(1);
+                TimeUnit.MILLISECONDS.sleep(10);
 
                 System.out.println("Confirm password: ");
                 user.setPasswordValidation(scanner.nextLine());
@@ -79,7 +81,7 @@ public final class RegisterAndLogin{
         } while(user.getPassword().compareTo(user.getPasswordValidation()) != 0);
     }
 
-    public void Login(User user){
+    public void Login(User user){ // sacar el prototipado User user, para trabajarlo con archivos
         Scanner scanner = new Scanner(System.in);
 
         // próxima implementación: agregar el menú con las opciones de registro y logueo dentro de una nueva clase
@@ -102,5 +104,35 @@ public final class RegisterAndLogin{
         } while(user.getDni() != user.getDniValidation() && user.getPassword().compareTo(user.getPasswordValidation()) != 0);
     }
 
+
+
+
+    public void censoredPassword(User user){
+        Scanner scanner = new Scanner(System.in);
+
+        TextField password = new TextField();
+        //JPasswordField
+        password.setEchoChar('*');
+
+        scanner.next().charAt(0);
+
+        /*do{
+            user.setPassword(scanner.nextLine());
+
+
+
+
+        } while();*/
+
+
+
+
+
+
+
+
+
+
+    }
 
 }
