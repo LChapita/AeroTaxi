@@ -15,7 +15,7 @@ public abstract class Avion {
         this.combustible = combustible;
         this.propulsion = propulsion;
 
-        ///this.costoPorKilometro = costoPorKilometro; calculo de costo por km
+        this.costoPorKilometro = costoPorKilometro;
         this.velocidadMaxima = propulsion.getVelocidadMaxima();
 
     }
@@ -59,4 +59,6 @@ public abstract class Avion {
     public Propulsion getPropulsion() {
         return propulsion;
     }
+
+
 }
