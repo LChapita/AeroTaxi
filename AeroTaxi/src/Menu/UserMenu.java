@@ -20,13 +20,12 @@ public class UserMenu{
 
         Scanner scanner = new Scanner(System.in);
 
-        int option;
-
-        //try {
+        int option = 0;
+        try {
             option = scanner.nextInt();
-        //} catch(InputMismatchException e){
-          //  System.out.println("Only integer value");
-        //}
+        } catch(InputMismatchException e){
+            System.out.println("Only integer value");
+        }
 
 
         switch(option){
