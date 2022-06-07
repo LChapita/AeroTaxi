@@ -1,12 +1,6 @@
-import com.google.gson.Gson;
-
-import java.io.*;
-import java.nio.Buffer;
-import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) {
@@ -66,7 +60,7 @@ public class Main {
             e.printStackTrace();
         }*/
 
-
+        Usuario tipoUsuario=new Usuario();
         Usuario usuario1 = new Usuario("Lucas", "Chapa", 12345678, 25, 123);
         Usuario usuario2 = new Usuario("Bruno", "Gregorio", 98765432, 26, 456);
 
@@ -74,37 +68,69 @@ public class Main {
         usuarioArrayList.add(usuario1);
         usuarioArrayList.add(usuario2);
 
+        Usuario usuario3 = new Usuario("Matias", "Kinder", 99999999, 24, 789);//cargo nuevo usuario
+
+        //usuarioArrayList.add(usuario3);
+        /*
         Avion gold = new Gold(1000, 10, Propulsion.REACCION, true, true);
         Avion silver = new Silver(1000, 10, Propulsion.REACCION, true);
         Avion bronze = new Bronze(1000, 10, Propulsion.REACCION);
 
         Vuelo vuelo = new Vuelo(Ciudad.BUE, Ciudad.COR, bronze, LocalDate.now(), 6, usuario1);
+        */
+        Archivo<Usuario> archivoUsuarios = new Archivo<>("baseUsuarios.json");
 
-        Archivo<Usuario> archivoUsuarios = new Archivo<>("baseUsuarios.txt");
+        //archivoUsuarios.guardar(usuarioArrayList,Usuario.class);//guardar el archivo
 
-        ArrayList<Usuario> clientes = archivoUsuarios.rescatar();//pasar a un arreglo el archivo
+        List<Usuario> clientes = archivoUsuarios.rescatar(Usuario.class);//pasar a un arreglo el archivo
 
-        archivoUsuarios.guardar(usuarioArrayList);//guardar el archivo
-
+        /*
         /*for (Object user : clientes) {
             System.out.println(user.toString());
 
         }*/
-        Usuario usuario3 = new Usuario("Matias", "Kinder", 98765432, 24, 789);
+        ///metodo copia lista usuarios****
+        /*
+        for (Object user : clientes) {
+            System.out.println(user.toString());
+
+        }*/
+        //Usuario usuario4 = new Usuario("Roberto", "Lucero", 99777888, 80, 967);//cargo nuevo usuario
+
+        //clientes.add(usuario4);
+
+        //archivoUsuarios.guardar(clientes);
 
         clientes.add(usuario3);
+        archivoUsuarios.guardar((ArrayList<Usuario>) clientes,Usuario.class);
 
-        archivoUsuarios.guardar(clientes);
+        List<Usuario> nuevo=archivoUsuarios.rescatar(Usuario.class);
 
-        ArrayList<Usuario> nueva = archivoUsuarios.rescatar();
-
-        for (Object user : nueva) {
+        for (Usuario user : nuevo) {
             System.out.println(user.toString());
 
         }
 
+
+        //Usuario usuario4 = new Usuario("Roberto", "Lucero", 99777888, 80, 967);//cargo nuevo usuario
+    /*
+        clientes.add(usuario4);
+        archivoUsuarios.guardar(clientes);
+
+        Usuario usuario5 = new Usuario("Carlos", "Peña", 15478966, 40, 897);//cargo nuevo usuario
+
+        clientes.add(usuario5);
+        archivoUsuarios.guardar(clientes);
+
+        for (Object aux : clientes ) {
+            System.out.println(aux);
+
+        }*/
+
+
         //System.out.println(vuelo.calcularCosto());
     }
+
 /*
     public static void nuevoUsuario(File clientesFile, ArrayList usuarios) {
 

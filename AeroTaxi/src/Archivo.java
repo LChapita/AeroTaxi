@@ -1,12 +1,15 @@
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Archivo<T> {
-    private String pricipalArchivo;
-    private ArrayList<T> baseArchivo;
+    private final String pricipalArchivo;
+    private final ArrayList<T> baseArchivo;
 
     public Archivo(String trayectoArchivo) {///creo una lista para archivos
         this.pricipalArchivo = trayectoArchivo;
@@ -14,50 +17,87 @@ public class Archivo<T> {
     }
 
 
-    public void guardar(ArrayList<T> arrayList) {
+    public void guardar(ArrayList<T> arrayList,Class<T> tipoClase) {///objetos por separado
         File archivo = new File(pricipalArchivo);
+        Gson gson = new Gson();
 
-        try {
-
-            if (!archivo.exists()) {///como crear un nuevo archivo?
-
+        if (!archivo.exists()) {
+            try {
                 archivo.createNewFile();
-                BufferedWriter salida = new BufferedWriter(new FileWriter(archivo));
-
-                for (T aux : arrayList) {//obligado
-                    Gson gson = new Gson();
-                    gson.toJson(aux, salida);
-
-                }
-                salida.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+        }
+
+        BufferedWriter salida=null;
+
+        ///verificar repetidos antes de guardar
+        try {
+            ///como crear un nuevo archivo?
+            salida = new BufferedWriter(new FileWriter(archivo));
+
+            for (T aux : arrayList) {//obligado
+                baseArchivo.add(aux);
+            }
+            gson.toJson(baseArchivo,salida);
+
+            //System.out.println("macaco");
+            salida.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    public ArrayList<T> rescatar() {
+    public List<T> rescatar(Class<T> tipoClase) {
         File archivo = new File(pricipalArchivo);
 
-        ArrayList<T> rescatado = new ArrayList<>();
+        List<T> rescatado=new ArrayList<>();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
         if (!archivo.exists()) {
             return null;
         }
-        BufferedReader entrada=null;
+
+        Type colecctionType=TypeToken.getParameterized(List.class,tipoClase).getType();
+
+        BufferedReader entrada = null;
+
+
         try {
             entrada = new BufferedReader(new FileReader(archivo));
-            String leo=null;
+
+            rescatado = gson.fromJson(entrada, colecctionType);
+
+
+            /*String leo = null;
             while ((leo = entrada.readLine()) != null) {
                 rescatado.add((T) leo);
-            }
-            entrada.close();
+            }*/
+
+
+
         } catch (IOException e) {
             System.out.println("error base de datos");
+        } finally {
+            if(entrada!=null){
+                try{
+                    entrada.close();
+                }
+                 catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
+
         return rescatado;
     }
+
+
+
     //System.out.println("macaco");
+
 
 }
 
