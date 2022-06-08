@@ -11,6 +11,9 @@ public abstract class Persona implements AccionesDePersona{
         this.edad = edad;
     }
 
+    protected Persona() {
+    }
+
     public String getNombre() {
         return nombre;
     }

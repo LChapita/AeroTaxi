@@ -1,4 +1,6 @@
+import java.util.List;
+
 public interface AccionesDePersona {
-    void mostrarUsuarios();
+    void mostrarUsuarios(List<Usuario> usuarios);
 
 }

@@ -1,46 +1,57 @@
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import netscape.javascript.JSObject;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class Main {
     public static void main(String[] args) {
+        List<Usuario> users = new ArrayList<>();
+        Usuario newUser = new Usuario("alex", "villca", 22, 22);
+        Usuario newUser2 = new Usuario("agustin", "rivadineira", 22, 22);
 
 
 
-        escribir();
-        leer();
-    }
 
 
-    private static void escribir() {
-        File file = new File("archivo_usuarios.json");
-        try{
 
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
-        Usuario userOne = new Usuario("alex","Villca",24412122,22);
-        Usuario userTwo = new Usuario("Agustin","Rivadineira",223029219,22);
-        Gson gson = new Gson();
-        gson.toJson(userOne,Usuario.class,bufferedWriter);
-        gson.toJson(userTwo,Usuario.class,bufferedWriter);
+
+
+
+
+
+       /* users.add(0,newUser);
+        users.add(1,newUser2);
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String jsonString = gson.toJson(users,users.getClass());
+
+
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("archivo_usuarios.json"))) {
+            bufferedWriter.write(jsonString);
+        }catch (FileNotFoundException e){
+            System.out.println("Error en archivo");
         }catch (IOException e){
-            System.out.println("Error archivo" + e.getMessage());
+            System.out.println("super error");
         }
-
-    }
-    private static void leer() {
-        File file = new File("archivo_usuarios.json");
-        try{
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-        Gson gson = new Gson();
-        Usuario chargue = gson.fromJson(bufferedReader,Usuario.class);
-        System.out.println(chargue);
+        Type collectionType = TypeToken.getParameterized(List.class,Usuario).getType();
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("archivo_usuarios.json"))){
+            List<Usuario> usuario;
+            usuario = gson.fromJson(bufferedReader,collectionType);
+            for (var users : usuario) {
+                System.out.println(users.toString());
+                }
+            }
         }catch (IOException e){
-            System.out.println("error en el archivo" + e.getMessage());
-        }
-    }
+            System.out.println("error maximo");
+        }*/
 
+    }
 }
+

@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Admin extends Persona{
 
     public Admin(String nombre, String apellido, int dni, int edad) {
@@ -5,7 +7,10 @@ public class Admin extends Persona{
     }
 
     @Override
-    public void mostrarUsuarios() {
+    public void mostrarUsuarios(List<Usuario> usuarios) {
+        for (:) {
+
+        }
 
     }
 }
