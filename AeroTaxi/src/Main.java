@@ -80,9 +80,10 @@ public class Main {
         */
         Archivo<Usuario> archivoUsuarios = new Archivo<>("baseUsuarios.json");
 
+        List<Usuario> clientes = archivoUsuarios.rescatar(Usuario.class);//pasar a un arreglo el archivo
+
         //archivoUsuarios.guardar(usuarioArrayList,Usuario.class);//guardar el archivo
 
-        List<Usuario> clientes = archivoUsuarios.rescatar(Usuario.class);//pasar a un arreglo el archivo
 
         /*
         /*for (Object user : clientes) {
@@ -104,12 +105,13 @@ public class Main {
         clientes.add(usuario3);
         archivoUsuarios.guardar((ArrayList<Usuario>) clientes,Usuario.class);
 
-        List<Usuario> nuevo=archivoUsuarios.rescatar(Usuario.class);
-
-        for (Usuario user : nuevo) {
+        for (Usuario user : clientes) {
             System.out.println(user.toString());
 
         }
+        //List<Usuario> nuevo=archivoUsuarios.rescatar(Usuario.class);
+
+        //System.out.println(clientes);
 
 
         //Usuario usuario4 = new Usuario("Roberto", "Lucero", 99777888, 80, 967);//cargo nuevo usuario

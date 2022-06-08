@@ -55,15 +55,14 @@ public class Archivo<T> {
 
         List<T> rescatado=new ArrayList<>();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
+        /*
         if (!archivo.exists()) {
             return null;
-        }
+        }*/
 
         Type colecctionType=TypeToken.getParameterized(List.class,tipoClase).getType();
 
         BufferedReader entrada = null;
-
 
         try {
             entrada = new BufferedReader(new FileReader(archivo));
