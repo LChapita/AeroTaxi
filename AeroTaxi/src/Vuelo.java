@@ -33,16 +33,34 @@ public class Vuelo implements Serializable {
 
         distancias.put((Ciudad.BUE).hashCode() + (Ciudad.COR).hashCode(),695);
         distancias.put((Ciudad.BUE).hashCode() + (Ciudad.SCL).hashCode(),1400);
+        distancias.put((Ciudad.BUE.hashCode())+(Ciudad.MVD).hashCode(),950);
+        distancias.put((Ciudad.COR.hashCode())+(Ciudad.MVD).hashCode(),1190);
+        distancias.put((Ciudad.COR.hashCode())+(Ciudad.SCL).hashCode(),1050);
+        distancias.put((Ciudad.MVD.hashCode())+(Ciudad.SCL).hashCode(),2100);
+
 
         int ruta=origen.hashCode() + destino.hashCode();
 
         return distancias.get(ruta);
     }
-    /*
-    public float calcularCosto(){
-        int precio=0;
 
-        return;
-    }*/
+    public float calcularCosto() {
+        int precio = 0;
+        //quiero comparar 2 clase para retornar el precio
+        if(this.tipoAvion.getClass().equals(Gold.class)){
+            precio= ((Gold) tipoAvion).getPrecio();
+            //System.out.println(precio);
+        }else{
+            if(this.tipoAvion.getClass().equals(Silver.class)){
+                precio= ((Silver) tipoAvion).getPrecio();
+            }else{
+                if (this.tipoAvion.getClass().equals(Bronze.class)){
+                    precio= ((Bronze) tipoAvion).getPrecio();
+                }
+            }
+        }
+        //(Cantidad de kms * Costo del km) + (cantidad de pasajeros * 3500) + (Tarifa del tipo de avión)
+        return ((this.obtenerDistancia() * this.tipoAvion.getCostoPorKilometro()) + (cantidadPasajeros * 3500) + precio);
+    }
 
 }
