@@ -1,3 +1,5 @@
+import java.util.List;
+
 public abstract class Persona implements AccionesDePersona{
     private String nombre;
     private String apellido;
@@ -38,5 +40,19 @@ public abstract class Persona implements AccionesDePersona{
                 ", dni=" + dni +
                 ", edad=" + edad +
                 '}';
+    }
+
+    @Override
+    public void mostrarUsuarios(List<Usuario> usuarios) {
+    }
+
+    @Override
+    public List<Usuario> removerUsuario(List<Usuario> usuarios,int eliminar) {
+        return null;
+    }
+
+    @Override
+    public Usuario modificarUsuario(List<Usuario> usuarios,int dni) {
+        return null;
     }
 }

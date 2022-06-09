@@ -11,20 +11,14 @@ public class Usuario extends Persona{
     }
 
 
-
-    @Override
-    public void mostrarUsuarios(List<Usuario> usuarios) {
-        if(usuarios != null){
-            for (Usuario usuario: usuarios) {
-
-            }
-        }
-    }
-
     @Override
     public String toString() {
         return super.toString();
     }
 
+    @Override
+    public Usuario modificarUsuario(List<Usuario> usuarios,int dni) {
+       return  null;
 
+    }
 }
