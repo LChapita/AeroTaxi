@@ -5,6 +5,7 @@ public enum Propulsion {
 
     private String tipoMotor;
     private int velocidadMaxima;
+
     Propulsion(String tipoMotor,int velocidadMaxima){
         this.tipoMotor=tipoMotor;
         this.velocidadMaxima=velocidadMaxima;

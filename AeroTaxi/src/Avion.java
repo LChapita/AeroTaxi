@@ -1,6 +1,4 @@
-import java.io.Serializable;
-
-public abstract class Avion {
+public abstract class Avion{
     private int combustible;
     private float costoPorKilometro;
     private int capacidadMAxima;

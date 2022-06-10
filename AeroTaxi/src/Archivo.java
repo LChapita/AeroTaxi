@@ -69,13 +69,10 @@ public class Archivo<T> {
 
             rescatado = gson.fromJson(entrada, colecctionType);
 
-
             /*String leo = null;
             while ((leo = entrada.readLine()) != null) {
                 rescatado.add((T) leo);
             }*/
-
-
 
         } catch (IOException e) {
             System.out.println("error base de datos");
