@@ -145,6 +145,7 @@ public class Main {
         DateTimeFormatter forma= DateTimeFormatter.ofPattern("HH-dd-MM-yyyy");
         System.out.println(fecha.format(forma));
         */
+
     }
 
 
@@ -244,81 +245,130 @@ public class Main {
             } while ((opcion < 0) || (opcion >= trayectos.size()));
             System.out.println(" - " + trayectos.get(opcion).getNombreCiudad() + " - \n");
 
-            if(e==0){
-                origen=trayectos.get(opcion);
+            if (e == 0) {
+                origen = trayectos.get(opcion);
                 System.out.println("Seleccione ciudad de destino: ");
-            }else {
-                destino=trayectos.get(opcion);
+            } else {
+                destino = trayectos.get(opcion);
             }
             trayectos.remove(opcion);
         }
         System.out.println("Ingrese cantidad de acompañantes o 0(cero) si viaja solo: ");
-        int cantidadPasajeros=new Scanner(System.in).nextInt();
+        int cantidadPasajeros = new Scanner(System.in).nextInt();
 
         ///seleccionar Avion
-        Avion avionReservado=seleccionarAvion(vuelosContratados,aviones,fechaIngresada,cantidadPasajeros);
+        Avion avionReservado = seleccionarAvion(vuelosContratados, aviones, fechaIngresada, cantidadPasajeros);
 
-        Vuelo reservado=null;
-        int respuesta=0;
-        if(avionReservado!=null){
-            Vuelo nuevoVuelo= new Vuelo(origen,destino,avionReservado,fechaIngresada,cantidadPasajeros,usuario);
-            System.out.println("Costo del vuelo: $"+nuevoVuelo.calcularCosto());
-            System.out.println("Confirmar= 1 "+"/ Cancelar= 0 ");
+        Vuelo reservado = null;
+        int respuesta = 0;
+        if (avionReservado != null) {
+            Vuelo nuevoVuelo = new Vuelo(origen, destino, avionReservado, fechaIngresada, cantidadPasajeros, usuario);
+            System.out.println("Costo del vuelo: $" + nuevoVuelo.calcularCosto());
+            System.out.println("Confirmar= 1 " + "/ Cancelar= 0 ");
             do {
-                respuesta=new Scanner(System.in).nextInt();
-            }while (respuesta!=1 && respuesta!=0);
-            if (respuesta==1){
-                reservado=nuevoVuelo;
+                respuesta = new Scanner(System.in).nextInt();
+            } while (respuesta != 1 && respuesta != 0);
+            if (respuesta == 1) {
+                reservado = nuevoVuelo;
             }
 
         }
-        if (respuesta==0){
+        if (respuesta == 0) {
             System.out.println("Se cancelo la reserva.");
         }
 
         return reservado;
     }
 
-    public static Avion seleccionarAvion(ArrayList<Vuelo> recuperarVuelos,ArrayList<Avion> recuperarAviones,LocalDateTime fechaPartida,int cantidadPasajeros){
-        int i=0;
-        boolean reservar=false;
-        boolean disponible=false;
+    public static Avion seleccionarAvion(ArrayList<Vuelo> recuperarVuelos, ArrayList<Avion> recuperarAviones, LocalDateTime fechaPartida, int cantidadPasajeros) {
+        int i = 0;
+        boolean reservar = false;
+        boolean disponible = false;
 
         System.out.println("estos son los aviones disponibles: ");
-        for (Avion avion:recuperarAviones){///busco los aviones 1 por 1
-            for(Vuelo vuelo:recuperarVuelos){// busco en el registro los vuelos pactados 1 por 1
-                if (vuelo.getPartida().equals(fechaPartida) && vuelo.getTipoAvion().equals(avion)){
+        for (Avion avion : recuperarAviones) {///busco los aviones 1 por 1
+            for (Vuelo vuelo : recuperarVuelos) {// busco en el registro los vuelos pactados 1 por 1
+                if (vuelo.getPartida().equals(fechaPartida) && vuelo.getTipoAvion().equals(avion)) {
                     //encuentro el registro de vuelo y si se encuentra la fecha y el avion elegidos
                     //entonces el avion esta reservado y no se puede usar
-                    reservar=true;
+                    reservar = true;
 
                 }
             }
-            if (!reservar && avion.getCapacidadMAxima() >=cantidadPasajeros){
-                System.out.println("Avion ID: "+i+"---"+avion);
-                disponible=true;
+            if (!reservar && avion.getCapacidadMAxima() >= cantidadPasajeros) {
+                System.out.println("Avion ID: " + i + "---" + avion);
+                disponible = true;
             }
             i++;
         }
-        Avion avionSeleccionado=null;
-        if (disponible){
+        Avion avionSeleccionado = null;
+        if (disponible) {
             System.out.println("Ingrese el Id del avion: ");
-            int opcion=new Scanner(System.in).nextInt();
+            int opcion = new Scanner(System.in).nextInt();
             avionSeleccionado = recuperarAviones.get(opcion);
-        }else {
+        } else {
             System.out.println("No hay aviones disponibles");
         }
 
         return avionSeleccionado;
     }
-    public static void verVuelo(ArrayList<Vuelo> recuperarVuelos){
-        if(!recuperarVuelos.isEmpty()){
-            for (Vuelo aux:recuperarVuelos){
+
+    public static void verVuelo(ArrayList<Vuelo> recuperarVuelos) {
+        if (!recuperarVuelos.isEmpty()) {
+            for (Vuelo aux : recuperarVuelos) {
                 System.out.println(aux);
             }
-        }
-        else {
+        } else {
             System.out.println("No hay vuelos. ");
         }
     }
+
+    public static Vuelo cancelarUnVuelo(Usuario usuario, LocalDateTime fechaVuelo, ArrayList<Vuelo> recuperarVuelos) {
+        boolean hallado = false;
+        Vuelo vuelo = null;
+        for (Vuelo aux : recuperarVuelos) {
+            if (aux.getPartida().compareTo(fechaVuelo) == 0 && aux.getCliente().getDni() == usuario.getDni()) {
+                if (aux.getPartida().isAfter(LocalDateTime.now())) {
+                    vuelo=aux;
+                }else {
+                    System.out.println("El vuelo debe cancelarse con al menos un dia de anticipacion.");
+                }
+                hallado= true;
+            }
+            if (hallado){
+                break;
+            }
+        }
+        if(!hallado){
+            System.out.println("No tiene un vuelo reservado en la fecha indicada. ");
+        }
+        return vuelo;
+
+    }
+
+    public static String verTipoAvionContratado(ArrayList<Vuelo> recuperarVuelos,Usuario usuario){///puede usarse para ver que tipo de avion contrato cada cliente
+        //se debe de utilizar en una lista de clientes
+        String mejor="No se han pedido vuelos aun";
+        boolean correcta=false;
+        for (Vuelo vuelo:recuperarVuelos){
+            if (vuelo.getCliente().getDni()==usuario.getDni()){
+                Avion avion=vuelo.getTipoAvion();
+                if (avion instanceof Gold){
+                    mejor="El cliente saco la categoria Gold";
+                    break;
+                }else{
+                    if (avion instanceof Silver){
+                        mejor="El cliente saco hasta la categoria Silver";
+                        correcta=true;
+                    }else{
+                        if (avion instanceof Bronze && !correcta){
+                            mejor="El cliente saco hasta la categoria Bronze";
+                        }
+                    }
+                }
+            }
+        }
+        return mejor;
+    }
+
 }
