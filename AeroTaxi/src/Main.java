@@ -256,9 +256,25 @@ public class Main {
         int cantidadPasajeros=new Scanner(System.in).nextInt();
 
         ///seleccionar Avion
+        Avion avionReservado=seleccionarAvion(vuelosContratados,aviones,fechaIngresada,cantidadPasajeros);
 
+        Vuelo reservado=null;
+        int respuesta=0;
+        if(avionReservado!=null){
+            Vuelo nuevoVuelo= new Vuelo(origen,destino,avionReservado,fechaIngresada,cantidadPasajeros,usuario);
+            System.out.println("Costo del vuelo: $"+nuevoVuelo.calcularCosto());
+            System.out.println("Confirmar= 1 "+"/ Cancelar= 0 ");
+            do {
+                respuesta=new Scanner(System.in).nextInt();
+            }while (respuesta!=1 && respuesta!=0);
+            if (respuesta==1){
+                reservado=nuevoVuelo;
+            }
 
-
+        }
+        if (respuesta==0){
+            System.out.println("Se cancelo la reserva.");
+        }
 
         return reservado;
     }
@@ -271,11 +287,28 @@ public class Main {
         System.out.println("estos son los aviones disponibles: ");
         for (Avion avion:recuperarAviones){///busco los aviones 1 por 1
             for(Vuelo vuelo:recuperarVuelos){// busco en el registro los vuelos pactados 1 por 1
-                if (vuel==true){
+                if (vuelo.getPartida().equals(fechaPartida) && vuelo.getTipoAvion().equals(avion)){
+                    //encuentro el registro de vuelo y si se encuentra la fecha y el avion elegidos
+                    //entonces el avion esta reservado y no se puede usar
+                    reservar=true;
 
                 }
             }
+            if (!reservar && avion.getCapacidadMAxima() >=cantidadPasajeros){
+                System.out.println("Avion ID: "+i+"---"+avion);
+                disponible=true;
+            }
+            i++;
         }
+        Avion avionSeleccionado=null;
+        if (disponible){
+            System.out.println("Ingrese el Id del avion: ");
+            int opcion=new Scanner(System.in).nextInt();
+            avionSeleccionado = recuperarAviones.get(opcion);
+        }else {
+            System.out.println("No hay aviones disponibles");
+        }
+
         return avionSeleccionado;
     }
 }
