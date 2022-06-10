@@ -311,4 +311,14 @@ public class Main {
 
         return avionSeleccionado;
     }
+    public static void verVuelo(ArrayList<Vuelo> recuperarVuelos){
+        if(!recuperarVuelos.isEmpty()){
+            for (Vuelo aux:recuperarVuelos){
+                System.out.println(aux);
+            }
+        }
+        else {
+            System.out.println("No hay vuelos. ");
+        }
+    }
 }
