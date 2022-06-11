@@ -20,7 +20,7 @@ public class Main {
 
         RegisterAndLogin user1 = new RegisterAndLogin();
         user1.Register();
-
+        System.out.println();
 
         ArrayList<RegisterAndLogin> ArrayListUser = new ArrayList<>();
         ArrayListUser.add(user1);

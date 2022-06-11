@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -13,8 +14,7 @@ public final class RegisterAndLogin{
     public RegisterAndLogin(){}
 
 
-    public void Register(){
-        User user = new User();
+    public void Register(User user, ArrayList<User> userArrayList){
         Scanner scanner = new Scanner(System.in);
 
         do {
@@ -52,6 +52,9 @@ public final class RegisterAndLogin{
         } while(user.getAge() == 0);
 
         passwordCreation(user);
+
+        userArrayList.add(user); // agrego el usuario ya registrado a la lista
+
     }
 
     public void passwordCreation(User user){
@@ -81,17 +84,23 @@ public final class RegisterAndLogin{
         } while(user.getPassword().compareTo(user.getPasswordValidation()) != 0);
     }
 
-    public void Login(User user){ // sacar el prototipado User user, para trabajarlo con archivos
+    public void Login(User user, ArrayList<User> userArrayList){
         Scanner scanner = new Scanner(System.in);
 
-        // próxima implementación: agregar el menú con las opciones de registro y logueo dentro de una nueva clase
+        if(user.getDni() == 0 || user.getPassword() == null){ // en caso de que el usuario entre directamente
+            System.out.println("You must be register for login");
+            return;
+        }
+
 
         do{
             try{
-                System.out.println("User login: ");
+                System.out.println("User login: \n");
 
                 System.out.println("Dni: ");
-                 user.setDniValidation(scanner.nextInt());
+                user.setDniValidation(scanner.nextInt());
+
+                scanner.nextLine(); // limpio el buffer
 
                 System.out.println("Password: ");
                 user.setPasswordValidation(scanner.nextLine());
@@ -101,9 +110,21 @@ public final class RegisterAndLogin{
                 System.out.println("You must be enter with a corresponding value");
                 scanner.nextLine();
             }
-        } while(user.getDni() != user.getDniValidation() && user.getPassword().compareTo(user.getPasswordValidation()) != 0);
-    }
 
+
+            //} while(userArrayList.get(i).getDni() != user.getDniValidation() && userArrayList.get(i++).getPassword().compareTo(user.getPasswordValidation()) != 0);
+            //} while(user.getDni() != user.getDniValidation() && user.getPassword().compareTo(user.getPasswordValidation()) != 0);
+        } while(user.getPasswordValidation().charAt(0) == 0);
+
+        for (User userSearched : userArrayList) {
+            if(userSearched.getDniValidation() == user.getDni() && userSearched.getPasswordValidation().compareTo(user.getPassword()) == 0){
+                System.out.println("Welcome back: " + user.getName() + " " + user.getSurname());
+                // implementación de vuelos del aerotaxi
+            }
+        }
+
+
+    }
 
 
 
@@ -123,14 +144,6 @@ public final class RegisterAndLogin{
 
 
         } while();*/
-
-
-
-
-
-
-
-
 
 
     }
