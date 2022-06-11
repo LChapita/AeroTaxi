@@ -75,7 +75,7 @@ public class Archivo<T> {
             }*/
 
         } catch (IOException e) {
-            System.out.println("error base de datos");
+            System.out.println("error base de datos");///verificar bien que problema tiene al rescatar
         } finally {
             if(entrada!=null){
                 try{
