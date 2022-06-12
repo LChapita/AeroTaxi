@@ -1,11 +1,3 @@
-import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -194,6 +186,7 @@ public class Main {
         }
 
      */
+    /*
     public static LocalDateTime solicitarFecha() {
         Scanner teclado = new Scanner(System.in);
         LocalDateTime fecha = null;
@@ -210,6 +203,7 @@ public class Main {
         } while (!confirmar);
         return fecha;
     }
+
 
     public static Vuelo sacarVuelo(Usuario usuario, ArrayList<Vuelo> vuelosContratados, ArrayList<Avion> aviones) {
         Scanner teclado = new Scanner(System.in);
@@ -372,15 +366,19 @@ public class Main {
         }
         return mejor;
     }
+    */
 
     public static void prueba(){
-        Archivo<Usuario> archivoUsuarios = new Archivo<>("baseUsuarios.json");
+        /*
+        Archivo<User> archivoUsuarios = new Archivo<>("baseUsuarios.json");
         Archivo<Avion> archivoAviones = new Archivo<>("baseAviones.json");
         Archivo<Vuelo> archivoVuelos = new Archivo<>("baseVuelos.json");
 
-        List<Usuario> recuperarUsuarios = archivoUsuarios.rescatar(Usuario.class);
+        List<User> recuperarUsuarios = archivoUsuarios.rescatar(User.class);
         List<Avion> recuperarAvion = archivoAviones.rescatar(Avion.class);
         List<Vuelo> recuperarVuelos = archivoVuelos.rescatar(Vuelo.class);
+
+        */
 
 
         /*
@@ -406,6 +404,7 @@ public class Main {
         usuarioArrayList.add(usuario3);
         archivoUsuarios.guardar(usuarioArrayList,Usuario.class);
         */
+        /*
         System.out.println("**********");
         recuperarUsuarios=archivoUsuarios.rescatar(Usuario.class);
 
@@ -418,6 +417,17 @@ public class Main {
         archivoUsuarios.guardar((ArrayList<Usuario>) borrado,Usuario.class);
         System.out.println("********** muestra todos menos el que se borro");
         admin.mostrarUsuarios(borrado);
+        */
+
+        ///primero sistema de registro exitoso y verificacion del mismo
+
+
+
+
+        UserMenu userMenu=new UserMenu();
+
+
+        userMenu.Options();
 
 
 
