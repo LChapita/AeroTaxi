@@ -5,6 +5,7 @@
 
 
 
+import Menu.UserMenu;
 import User.RegisterAndLogin;
 import User.User;
 
@@ -15,15 +16,15 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        System.out.println("AeroTaxi\n\n");
+        ArrayList<User> userArrayList = new ArrayList<>();
+
+        UserMenu MainMenu = new UserMenu();
+        MainMenu.Options(userArrayList);
 
 
-        RegisterAndLogin user1 = new RegisterAndLogin();
-        user1.Register();
-        System.out.println();
 
-        ArrayList<RegisterAndLogin> ArrayListUser = new ArrayList<>();
-        ArrayListUser.add(user1);
+
+
 
 
 

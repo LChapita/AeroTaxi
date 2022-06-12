@@ -33,6 +33,7 @@ public class UserMenu{
             switch (option) {
                 case 1:
                     userCreation.Register(user, userArrayList);
+                    // guardar el usuario con archivos
                     break;
 
                 case 2:
@@ -50,7 +51,7 @@ public class UserMenu{
 
 
 
-    public void exitOption(){
+    private void exitOption(){
         System.out.println("Finish process");
     }
 

@@ -117,9 +117,10 @@ public final class RegisterAndLogin{
         } while(user.getPasswordValidation().charAt(0) == 0);
 
         for (User userSearched : userArrayList) {
-            if(userSearched.getDniValidation() == user.getDni() && userSearched.getPasswordValidation().compareTo(user.getPassword()) == 0){
+            if(userSearched.getDni() == user.getDniValidation() && (userSearched.getPassword().compareTo(user.getPasswordValidation())) == 0){
                 System.out.println("Welcome back: " + user.getName() + " " + user.getSurname());
                 // implementación de vuelos del aerotaxi
+
             }
         }
 
