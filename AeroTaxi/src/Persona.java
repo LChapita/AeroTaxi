@@ -1,6 +1,8 @@
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
-public abstract class Persona implements AccionesDePersona{
+public abstract class Persona implements AccionesDePersona,Comparable, Comparator {
     private String nombre;
     private String apellido;
     private int dni;
@@ -14,6 +16,22 @@ public abstract class Persona implements AccionesDePersona{
     }
 
     protected Persona() {
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public void setDni(int dni) {
+        this.dni = dni;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
     }
 
     public String getNombre() {
@@ -31,6 +49,7 @@ public abstract class Persona implements AccionesDePersona{
     public int getEdad() {
         return edad;
     }
+
 
     @Override
     public String toString() {
@@ -52,7 +71,43 @@ public abstract class Persona implements AccionesDePersona{
     }
 
     @Override
-    public Usuario modificarUsuario(List<Usuario> usuarios,int dni) {
+    public List<Usuario> modificarUsuario(List<Usuario> usuarios,int dni) throws InterruptedException {
         return null;
+    }
+
+    @Override
+    public void ordenarUsuario_Por_Dni(List<Usuario> usuarios) {
+    }
+
+    @Override
+    public void ordenarUsuario_Por_Nombre(List<Usuario> usuarios) {
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        // que le diga a la pc, que tiene que comparar del objeto?
+        // como lo ordena? segun que?
+        Usuario nuevo = (Usuario) o;
+        return nombre.compareTo(nuevo.getNombre());
+    }
+
+    @Override
+    public int compare(Object o1, Object o2) {
+        Usuario u1 = (Usuario) o1;
+        Usuario u2 = (Usuario) o2;
+        return u1.getDni() - u2.getDni();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Persona persona = (Persona) o;
+        return dni == persona.dni && edad == persona.edad && Objects.equals(nombre, persona.nombre) && Objects.equals(apellido, persona.apellido);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombre, apellido, dni, edad);
     }
 }

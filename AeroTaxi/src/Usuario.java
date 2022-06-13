@@ -16,9 +16,4 @@ public class Usuario extends Persona{
         return super.toString();
     }
 
-    @Override
-    public Usuario modificarUsuario(List<Usuario> usuarios,int dni) {
-       return  null;
-
-    }
 }

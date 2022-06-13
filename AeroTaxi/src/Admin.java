@@ -1,5 +1,10 @@
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
+
+import static java.util.Collections.*;
 
 public class Admin extends Persona {
 
@@ -35,6 +40,44 @@ public class Admin extends Persona {
             System.out.println("No se encontro el usuario");
         }
         return usuarios;
+    }
+
+    @Override
+    public List<Usuario> modificarUsuario(List<Usuario> usuarios, int dni) throws InterruptedException {
+        Scanner scanner = new Scanner(System.in);
+        for (Usuario usuario : usuarios) {
+            if(usuario.getDni()==dni){
+
+                System.out.println("Nombre: ");
+                usuario.setNombre(scanner.nextLine());
+
+
+                TimeUnit.MILLISECONDS.sleep(10);
+
+                System.out.println("Apellido: ");
+                usuario.setApellido(scanner.nextLine());
+
+                TimeUnit.MILLISECONDS.sleep(10);
+
+                System.out.println("Edad: ");
+                usuario.setEdad(scanner.nextInt());
+            }
+        }
+        return usuarios;
+    }
+    @Override
+    public int compareTo(Object o) {
+        Usuario nuevo = (Usuario) o;
+        return super.getNombre().compareTo(nuevo.getNombre());
+    }
+
+    @Override
+    public void ordenarUsuario_Por_Nombre(List<Usuario>usuarios) {
+        Collections.sort(usuarios);
+    }
+
+    public void ordenarUsuario_Por_Dni(List<Usuario>usuarios){
+        Collections.sort(usuarios);
     }
 }
 

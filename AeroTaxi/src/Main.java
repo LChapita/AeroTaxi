@@ -11,25 +11,37 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class Main {
-    public static void main(String[] args) throws IOException, InterruptedException{
+    public static void main(String[] args) throws InterruptedException {
         Admin unico = new Admin("vexal","x",22,22);
         List<Usuario> users = new ArrayList<>();
-        Usuario newUser = new Usuario("alex", "villca", 23, 22);
-        Usuario newUser2 = new Usuario("agustin", "rivadineira", 22, 22);
+        Usuario newUser = new Usuario("alex", "villca", 5531, 22);
+        Usuario newUser2 = new Usuario("rgustin", "rivadineira", 224, 22);
+        Usuario newUser3 = new Usuario("hgustin", "rivadineira", 522, 22);
+        Usuario newUser4 = new Usuario("agustin", "riv", 22, 922);
         List<Usuario> nueva = new ArrayList<>();
         users.add(newUser);
         users.add(newUser2);
+        users.add(newUser3);
+        users.add(newUser4);
         unico.mostrarUsuarios(users);
-        System.out.println(".....");
-        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-
-
-        nueva = unico.removerUsuario(users,22);
+        nueva = unico.modificarUsuario(users,23);
+        System.out.println("---------");
+        unico.ordenarUsuario_Por_Nombre(nueva);
         unico.mostrarUsuarios(nueva);
 
 
 
 
+       /* System.out.println(".....");
+        boolean existe = verificarUsuario(users,25);
+        if(existe == true){
+            System.out.println("usuario ya existe");
+        }else {
+            System.out.println("dni valido");
+        }
+
+        nueva = unico.removerUsuario(users,22);
+        unico.mostrarUsuarios(nueva);*/
 
 
 
@@ -64,6 +76,17 @@ public class Main {
             System.out.println("error maximo");
         }*/
 
+    }
+
+    public static boolean verificarUsuario(List<Usuario> usuarios, int dni) {
+        boolean verificar = false;
+        for (Usuario usuario : usuarios) {
+            if (usuario.getDni() == dni) {
+                verificar = true;
+            }
+
+        }
+        return verificar;
     }
 }
 
