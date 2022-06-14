@@ -35,6 +35,7 @@ public class UserMenu{
                 option = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Only integer value");
+                scanner.nextLine();
             }
 
 

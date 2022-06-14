@@ -15,9 +15,9 @@ public class Vuelo implements Serializable,Implementacion{
     private LocalDateTime llegada;
 
     private int cantidadPasajeros;
-    private Usuario cliente;
+    private User cliente;
 
-    public Vuelo(Ciudad origen, Ciudad destino, Avion tipoAvion, LocalDateTime partida, int cantidadPasajeros, Usuario cliente) {//en principio es lo que se carga
+    public Vuelo(Ciudad origen, Ciudad destino, Avion tipoAvion, LocalDateTime partida, int cantidadPasajeros, User cliente) {//en principio es lo que se carga
         this.origen = origen;
         this.destino = destino;
         this.tipoAvion = tipoAvion;
@@ -50,7 +50,7 @@ public class Vuelo implements Serializable,Implementacion{
         return cantidadPasajeros;
     }
 
-    public Usuario getCliente() {
+    public User getCliente() {
         return cliente;
     }
 
@@ -78,7 +78,7 @@ public class Vuelo implements Serializable,Implementacion{
         this.cantidadPasajeros = cantidadPasajeros;
     }
 
-    public void setCliente(Usuario cliente) {
+    public void setCliente(User cliente) {
         this.cliente = cliente;
     }
 

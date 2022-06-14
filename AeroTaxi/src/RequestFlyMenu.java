@@ -45,20 +45,21 @@ public class RequestFlyMenu {
         trayectos.add(Ciudad.MVD);
         trayectos.add(Ciudad.SCL);
 
-        //Ciudad origen = null;
-        //Ciudad destino = null;
+        Ciudad origen = null;
+        Ciudad destino = null;
 
 
         int confirmacion = 0;
         do{
             System.out.println("Seleccione la ciudad de origen: ");
-            Ciudad origen = OriginCity(trayectos);
+            origen = OriginCity(trayectos);
 
             System.out.println("Seleccione la ciudad de destino: ");
-            Ciudad destino = DestinyCity(trayectos, origen);
+            destino = DestinyCity(trayectos, origen);
 
             if(( origen.getNombreCiudad().compareTo(destino.getNombreCiudad()) ) == 0){
-                System.out.println("Si desea confirmar, presione 1, caso contrario, presione 0");
+                System.out.println("Si desea confirmar, presione 1\n");
+                System.out.println("Si desea volver a modificar las ciudades, presione 0\n");
                 try{
                     confirmacion = teclado.nextInt();
                 } catch (InputMismatchException e){
@@ -71,10 +72,27 @@ public class RequestFlyMenu {
         System.out.println("Ingrese cantidad de acompañantes o 0(cero) si viaja solo: ");
         int cantidadPasajeros = new Scanner(System.in).nextInt();
 
+        Avion avionReservado = seleccionarAvion(vuelosContratados, aviones, fechaIngresada, cantidadPasajeros);
 
+        Vuelo reservado = null;
+        int respuesta = 0;
+        if (avionReservado != null) {
+            Vuelo nuevoVuelo = new Vuelo(origen, destino, avionReservado, fechaIngresada, cantidadPasajeros, user);
+            System.out.println("Costo del vuelo: $" + nuevoVuelo.calcularCosto());
+            System.out.println("Confirmar= 1 " + "/ Cancelar= 0 ");
+            do {
+                respuesta = new Scanner(System.in).nextInt();
+            } while (respuesta != 1 && respuesta != 0);
+            if (respuesta == 1) {
+                reservado = nuevoVuelo;
+            }
 
+        }
+        if (respuesta == 0) {
+            System.out.println("Se cancelo la reserva.");
+        }
 
-
+        return reservado;
     }
 
 
