@@ -1,4 +1,4 @@
-public abstract class Avion{
+public class Avion{
     private int combustible;
     private float costoPorKilometro;
     private int capacidadMAxima;
@@ -9,8 +9,8 @@ public abstract class Avion{
     }
 
     public Avion(int combustible, int capacidadMAxima, Propulsion propulsion) {
-        this.capacidadMAxima = capacidadMAxima;
         this.combustible = combustible;
+        this.capacidadMAxima = capacidadMAxima;
         this.propulsion = propulsion;
 
         this.costoPorKilometro = costoPorKilometro;

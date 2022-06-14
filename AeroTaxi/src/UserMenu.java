@@ -1,7 +1,5 @@
 
 
-import User.User;
-
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -19,9 +17,22 @@ public class UserMenu {
 
         List<User> recuperarUsuarios = archivoUsuarios.rescatar(User.class);
         List<Avion> recuperarAvion = archivoAviones.rescatar(Avion.class);
+
         List<Vuelo> recuperarVuelos = archivoVuelos.rescatar(Vuelo.class);
 
+        boolean datos=archivoAviones.existenDatos(recuperarAvion);
 
+
+        if(datos==true){
+            Avion avionGold=new Gold(15000,5,Propulsion.REACCION,true,true);
+            Avion avionSilver=new Silver(5000,15,Propulsion.PISTONES,true);
+            Avion avionBonze=new Bronze(11000,40,Propulsion.PISTONES);
+            recuperarAvion.add(avionGold);
+            recuperarAvion.add(avionSilver);
+            recuperarAvion.add(avionBonze);
+
+            archivoAviones.guardar(recuperarAvion,Avion.class);
+        }
 
 
         RegisterAndLogin userCreation = new RegisterAndLogin();
@@ -45,14 +56,15 @@ public class UserMenu {
 
             switch (option) {
                 case 1:
-                    userCreation.register(user, recuperarUsuarios);
+                    user= userCreation.register(user, recuperarUsuarios);
+                    recuperarUsuarios.add(user);
                     //guardar el usuario
                     archivoUsuarios.guardar(recuperarUsuarios,User.class);
                     ///guarda cuando finaliza el programa
                     break;
 
                 case 2:///otra funcion de menu donde le de opciones de que quiere hacer
-                    boolean confirmarLogin=userCreation.Login(user, recuperarUsuarios);
+                    boolean confirmarLogin=userCreation.Login(user, recuperarUsuarios,recuperarAvion,recuperarVuelos);
                     if (confirmarLogin){
                         //sacarvuelo
                         //System.out.println("macaco");

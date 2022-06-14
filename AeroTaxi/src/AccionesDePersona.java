@@ -1,9 +1,12 @@
 import java.util.List;
+import java.util.UUID;
 
 public interface AccionesDePersona {
-    void mostrarUsuarios(List<User.User> usuarios);
-    List<User.User> removerUsuario(List<User.User> usuarios, int eliminar);
-    User.User modificarUsuario(List<User.User> usuarios, int dni);
+    void mostrarUsuarios(List<User> usuarios);
+    List<User> removerUsuario(List<User> usuarios,int eliminar);
+    List<User> modificarUsuario(List<User> usuarios, int dni) throws InterruptedException;
+    void ordenarUsuario_Por_Nombre(List<User> usuarios);
+    void ordenarUsuario_Por_Dni(List<User> usuarios);
 
 
 }

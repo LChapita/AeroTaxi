@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Admin extends Persona {
 
@@ -8,9 +9,9 @@ public class Admin extends Persona {
     }
 
     @Override
-    public void mostrarUsuarios(List<User.User> usuarios) {
+    public void mostrarUsuarios(List<User> usuarios) {
         if (usuarios != null) {
-            for (User.User all : usuarios) {
+            for (User all : usuarios) {
                 System.out.println(all.toString());
             }
         } else {
@@ -20,11 +21,11 @@ public class Admin extends Persona {
     }
 
     @Override
-    public List<User.User> removerUsuario(List<User.User> usuarios, int eliminar) {
-        User.User aux = new User.User();
+    public List<User> removerUsuario(List<User> usuarios, int eliminar) {
+        User aux = new User();
         if (!usuarios.isEmpty()) {
 
-            for (User.User aEliminar : usuarios) {
+            for (User aEliminar : usuarios) {
                 if(aEliminar.getDni() == eliminar){
                     aux = aEliminar;
                 }
@@ -35,6 +36,36 @@ public class Admin extends Persona {
             System.out.println("No se encontro el usuario");
         }
         return usuarios;
+    }
+    public static boolean verificarAdministrador(int admiDni,String admiPassword){
+        boolean esAdmin=false;
+        String password="admi";
+        int user=0000;
+        if ((admiPassword.compareTo(password)==0)&&(admiDni==user)){
+            esAdmin=true;
+        }
+        return esAdmin;
+    }
+    public static void menuAdmi(List<User> recuperarUsuarios,List<Avion> recuperarAviones,List<Vuelo> recuperarVuelos){
+        int opcion;
+        do {
+            opcion=new Scanner(System.in).nextInt();
+            switch (opcion){
+                case (1):
+
+                    break;
+                case (2):
+                    //elimi
+                    break;
+                case (3):
+                    //Modificar Usuario
+                    break;
+                case(0):
+                    break;
+
+            }
+        }while (opcion > 0);
+
     }
 }
 

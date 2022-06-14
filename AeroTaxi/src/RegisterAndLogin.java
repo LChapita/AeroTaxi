@@ -4,7 +4,7 @@
 import com.google.gson.Gson;
 
 import javax.swing.*;
-import java.awt.*;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -16,13 +16,13 @@ public final class RegisterAndLogin {
     }*/
 
 
-    public void register(User.User user, List<User.User> userArrayList) {
+    public User register(User user, List<User> recuperarUsuarios) {
+        RequestFlyMenu requestFlyMenu=new RequestFlyMenu();
         Scanner scanner = new Scanner(System.in);
-
+        boolean verificar = false;
         do {
             try {
                 System.out.println("Register: \n");
-
 
                 System.out.println("Name: ");
                 user.setName(scanner.nextLine());
@@ -44,6 +44,16 @@ public final class RegisterAndLogin {
 
                 TimeUnit.MILLISECONDS.sleep(10);
 
+                verificar = requestFlyMenu.verificarUsuario(recuperarUsuarios,user.getDni());
+
+
+
+                if (verificar){
+
+                    System.out.println("\n El Usuario ya se encuentra registrado.");
+                    scanner.nextLine();
+                }
+
             } catch (InputMismatchException e) {
                 System.out.println("try it again");
                 scanner.nextLine();
@@ -51,15 +61,18 @@ public final class RegisterAndLogin {
                 System.out.println("Time out, try again later");
                 scanner.nextLine();
             }
-        } while (user.getAge() == 0);
+
+        } while (verificar);
 
         passwordCreation(user);
 
-        userArrayList.add(user); // agrego el usuario ya registrado a la lista
+        //System.out.println("macaco");
+        return user;
+        //recuperarUsuarios.add(user);// agrego el usuario ya registrado a la lista
 
     }
 
-    public void passwordCreation(User.User user) {
+    public void passwordCreation(User user) {
         Scanner scanner = new Scanner(System.in);
         //StringBuilder builder = new StringBuilder();
 
@@ -86,9 +99,11 @@ public final class RegisterAndLogin {
         } while (user.getPassword().compareTo(user.getPasswordValidation()) != 0);
     }
 
-    public boolean Login(User.User user, List<User.User> recuperarUsuarios) {
+    public boolean Login(User user, List<User> recuperarUsuarios,List<Avion> recuperarAviones,List<Vuelo> recuperarVuelos) {
         boolean confirmacion=false;
+        boolean verificarAdmi=false;
         Scanner scanner = new Scanner(System.in);
+
         /*
         if (user.getDni() == 0 || user.getPassword() == null) { // en caso de que el usuario entre directamente
             System.out.println("You must be register for login");
@@ -107,6 +122,14 @@ public final class RegisterAndLogin {
                 System.out.println("Password: ");
                 user.setPasswordValidation(scanner.nextLine());
 
+                ///verificar Admi
+                verificarAdmi= Admin.verificarAdministrador(user.getDni(),user.getPasswordValidation());
+                if(verificarAdmi){
+                    System.out.println(verificarAdmi);
+                    Admin.menuAdmi(recuperarUsuarios,recuperarAviones,recuperarVuelos);
+                    break;
+                }
+
 
             } catch (InputMismatchException e) {
                 System.out.println("You must be enter with a corresponding value");
@@ -118,7 +141,7 @@ public final class RegisterAndLogin {
             //} while(user.getDni() != user.getDniValidation() && user.getPassword().compareTo(user.getPasswordValidation()) != 0);
         } while (user.getPasswordValidation().charAt(0) == 0);
 
-        for (User.User userSearched : recuperarUsuarios) {
+        for (User userSearched : recuperarUsuarios) {
             if ((userSearched.getDni() == user.getDniValidation()) && (userSearched.getPassword().compareTo(user.getPasswordValidation()) == 0)) {
                 System.out.println("Welcome back: " + userSearched.getName() + " " + userSearched.getSurname());
                 confirmacion=true;
@@ -127,7 +150,7 @@ public final class RegisterAndLogin {
         return confirmacion;
     }
 
-
+    /*
     public void censoredPassword(User.User user) {
         Scanner scanner = new Scanner(System.in);
 
@@ -143,9 +166,10 @@ public final class RegisterAndLogin {
 
 
 
-        } while();*/
+        } while();
 
 
-    }
+    }*/
+
 
 }
