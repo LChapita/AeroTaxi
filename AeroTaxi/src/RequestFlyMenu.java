@@ -1,11 +1,8 @@
-import User.User;
-
-import javax.lang.model.util.Elements;
-import javax.security.sasl.SaslClient;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -29,7 +26,7 @@ public class RequestFlyMenu {
         return fecha;
     }
 
-    public static Vuelo sacarVuelo(User user, ArrayList<Vuelo> vuelosContratados, ArrayList<Avion> aviones) {
+    public static Vuelo sacarVuelo(User user, List<Vuelo> vuelosContratados, List<Avion> aviones) {
         Scanner teclado = new Scanner(System.in);
 
         System.out.println("Ingrese fecha de partida (hora-dia-mes-año)");
@@ -71,12 +68,17 @@ public class RequestFlyMenu {
 
         } while(confirmacion == 0);
 
-        // segunda mitad la termino mañana
+        System.out.println("Ingrese cantidad de acompañantes o 0(cero) si viaja solo: ");
+        int cantidadPasajeros = new Scanner(System.in).nextInt();
+
+
+
+
 
     }
 
 
-    private static Ciudad OriginCity(ArrayList<Ciudad> trayectos){
+    private static Ciudad OriginCity(List<Ciudad> trayectos){
         int i = 0;
         for(Ciudad inArgentina : trayectos){
             System.out.println(i++ + "- " + inArgentina.getNombreCiudad() + "(" + inArgentina + ")");
@@ -98,7 +100,7 @@ public class RequestFlyMenu {
         return trayectos.get(option); // retorno la ciudad elegida por el usuario
     }
 
-    private static Ciudad DestinyCity(ArrayList<Ciudad> trayectos, Ciudad origin){
+    private static Ciudad DestinyCity(List<Ciudad> trayectos, Ciudad origin){
         int i = 0;
         int trayectoEnUso = 0;
         for(Ciudad inArgentina : trayectos){
@@ -106,7 +108,7 @@ public class RequestFlyMenu {
                 System.out.println(i + "- " + inArgentina.getNombreCiudad() + "(" + inArgentina + ")");
 
             else
-                trayectoEnUso = trayectos.indexOf(--i);
+                trayectoEnUso = trayectos.indexOf(--i); // ver implementación
         }
 
         int option = 0;
@@ -126,20 +128,139 @@ public class RequestFlyMenu {
     }
 
 
+    public static Avion seleccionarAvion(List<Vuelo> recuperarVuelos, List<Avion> recuperarAviones, LocalDateTime fechaPartida, int cantidadPasajeros) {
+        int i = 0;
+        boolean reservar = false;
+        boolean disponible = false;
+
+        System.out.println("estos son los aviones disponibles: ");
+        for (Avion avion : recuperarAviones) {///busco los aviones 1 por 1
+            for (Vuelo vuelo : recuperarVuelos) {// busco en el registro los vuelos pactados 1 por 1
+                if (vuelo.getPartida().equals(fechaPartida) && vuelo.getTipoAvion().equals(avion)) {
+                    //encuentro el registro de vuelo y si se encuentra la fecha y el avion elegidos
+                    //entonces el avion esta reservado y no se puede usar
+                    reservar = true;
+
+                }
+            }
+            if (!reservar && avion.getCapacidadMAxima() >= cantidadPasajeros) {
+                System.out.println("Avion ID: " + i + "---" + avion);
+                disponible = true;
+            }
+            i++;
+        }
+        Avion avionSeleccionado = null;
+        if (disponible) {
+            System.out.println("Ingrese el Id del avion: ");
+            int opcion = new Scanner(System.in).nextInt();
+            avionSeleccionado = recuperarAviones.get(opcion);
+        } else {
+            System.out.println("No hay aviones disponibles");
+        }
+
+        return avionSeleccionado;
+    }
+
+
+    public static void verVuelo(ArrayList<Vuelo> recuperarVuelos) {
+        if (!recuperarVuelos.isEmpty()) {
+            for (Vuelo aux : recuperarVuelos) {
+                System.out.println(aux);
+            }
+        } else {
+            System.out.println("No hay vuelos. ");
+        }
+    }
+
+
+    public static Vuelo cancelarUnVuelo(User usuario, LocalDateTime fechaVuelo, ArrayList<Vuelo> recuperarVuelos) {
+        boolean hallado = false;
+        Vuelo vuelo = null;
+        for (Vuelo aux : recuperarVuelos) {
+            if (aux.getPartida().compareTo(fechaVuelo) == 0 && aux.getCliente().getDni() == usuario.getDni()) {
+                if (aux.getPartida().isAfter(LocalDateTime.now())) {
+                    vuelo = aux;
+                } else {
+                    System.out.println("El vuelo debe cancelarse con al menos un dia de anticipacion.");
+                }
+                hallado = true;
+            }
+            if (hallado) {
+                break;
+            }
+        }
+        if (!hallado) {
+            System.out.println("No tiene un vuelo reservado en la fecha indicada. ");
+        }
+        return vuelo;
+
+    }
+
+    public static String verTipoAvionContratado(List<Vuelo> recuperarVuelos, User usuario) {///puede usarse para ver que tipo de avion contrato cada cliente
+        //se debe de utilizar en una lista de clientes
+        String mejor = "No se han pedido vuelos aun";
+        boolean correcta = false;
+        for (Vuelo vuelo : recuperarVuelos) {
+            if (vuelo.getCliente().getDni() == usuario.getDni()) {
+                Avion avion = vuelo.getTipoAvion();
+                if (avion instanceof Gold) {
+                    mejor = "El cliente saco la categoria Gold";
+                    break;
+                } else {
+                    if (avion instanceof Silver) {
+                        mejor = "El cliente saco hasta la categoria Silver";
+                        correcta = true;
+                    } else {
+                        if (avion instanceof Bronze && !correcta) {
+                            mejor = "El cliente saco hasta la categoria Bronze";
+                        }
+                    }
+                }
+            }
+        }
+        return mejor;
+    }
+
+
+    public static boolean verificarUsuario(List<User> recuperarUsuarios, int dni) {
+        boolean verificar = false;
+        for (User usuario : recuperarUsuarios) {
+            if (usuario.getDni() == dni) {
+                verificar = true;
+                System.out.println("macaco9");
+            }
+
+        }
+        return verificar;
+    }
+    public static User retornarUnUsuario(List<User> recuperarUsuarios, int dni) {
+        User aux=null;
+        for (User usuario : recuperarUsuarios) {
+            if (usuario.getDni() == dni) {
+                aux=usuario;
+                break;
+            }
+
+        }
+        return aux;
+    }
+
+    public static boolean SolicitarVuelo(List<User> recuperarUsuarios, List<Avion> recuperarAviones, List<Vuelo> recuperarVuelos, int dni) {
+
+        boolean correcto =false;
+        User nuevo=null;
+        boolean existe=verificarUsuario(recuperarUsuarios, dni);
+        if(existe) {
+            nuevo=retornarUnUsuario(recuperarUsuarios,dni);
+            recuperarVuelos.add(sacarVuelo(nuevo,recuperarVuelos,recuperarAviones));
+            correcto=true;
+        }
+        return correcto;
+
+    }
+
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

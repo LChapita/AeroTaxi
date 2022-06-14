@@ -1,21 +1,25 @@
-package User;
 
 
-import com.google.gson.Gson;
 
-import javax.swing.*;
+
+
+
+
+
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 public final class RegisterAndLogin{
     public RegisterAndLogin(){}
 
 
-    public void Register(User user, ArrayList<User> userArrayList){
+    public void Register(User user, List<User> userList){
         Scanner scanner = new Scanner(System.in);
+
+        boolean verificar = false;
 
         do {
             try {
@@ -42,6 +46,13 @@ public final class RegisterAndLogin{
 
                 TimeUnit.MILLISECONDS.sleep(10);
 
+                // verifico que el usuario no se encuentre ya cargado en el archivo
+                verificar = RequestFlyMenu.verificarUsuario(userList, user.getDni());
+                if(verificar){
+                    System.out.println("El usuario ya se encuentra registrado\n");
+                    scanner.nextLine();
+                }
+
             } catch (InputMismatchException e){
                 System.out.println("try it again");
                 scanner.nextLine();
@@ -49,12 +60,13 @@ public final class RegisterAndLogin{
                 System.out.println("Time out, try again later");
                 scanner.nextLine();
             }
-        } while(user.getAge() == 0);
+        //} while(user.getAge() == 0);
+        } while(verificar);
 
         passwordCreation(user);
 
-        userArrayList.add(user); // agrego el usuario ya registrado a la lista
-
+        //userArrayList.add(user); // agrego el usuario ya registrado a la lista
+        userList.add(user); // agrego el usuario ya registrado a la lista
     }
 
     public void passwordCreation(User user){
@@ -84,13 +96,15 @@ public final class RegisterAndLogin{
         } while(user.getPassword().compareTo(user.getPasswordValidation()) != 0);
     }
 
-    public void Login(User user, ArrayList<User> userArrayList){
+    public boolean Login(User user, List<User> recuperarUsuarios){
+        boolean confirmacion = false;
         Scanner scanner = new Scanner(System.in);
 
-        if(user.getDni() == 0 || user.getPassword() == null){ // en caso de que el usuario entre directamente
+        /*if(user.getDni() == 0 || user.getPassword() == null){ // en caso de que el usuario entre directamente
             System.out.println("You must be register for login");
             return;
-        }
+        }*/
+
 
 
         do{
@@ -112,19 +126,16 @@ public final class RegisterAndLogin{
             }
 
 
-            //} while(userArrayList.get(i).getDni() != user.getDniValidation() && userArrayList.get(i++).getPassword().compareTo(user.getPasswordValidation()) != 0);
-            //} while(user.getDni() != user.getDniValidation() && user.getPassword().compareTo(user.getPasswordValidation()) != 0);
+        //} while(user.getPasswordValidation().charAt(0) == 0);
         } while(user.getPasswordValidation().charAt(0) == 0);
 
-        for (User userSearched : userArrayList) {
+        for (User userSearched : recuperarUsuarios) {
             if(userSearched.getDni() == user.getDniValidation() && (userSearched.getPassword().compareTo(user.getPasswordValidation())) == 0){
                 System.out.println("Welcome back: " + user.getName() + " " + user.getSurname());
-                // implementación de vuelos del aerotaxi
-
+                confirmacion = true;
             }
         }
-
-
+        return confirmacion;
     }
 
 

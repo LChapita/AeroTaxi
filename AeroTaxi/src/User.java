@@ -1,11 +1,8 @@
-package User;
-
-
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Objects;
 
-public class User{
+public class User extends Persona{
 
     private String password;
     private transient String passwordValidation;
@@ -22,9 +19,8 @@ public class User{
 
     public void setName(String name) {this.name = name;}
     public String getName(){return this.name;}
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
+
+    public void setSurname(String surname) {this.surname = surname;}
     public String getSurname(){return this.surname;}
 
 

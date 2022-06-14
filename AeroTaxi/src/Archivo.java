@@ -17,7 +17,7 @@ public class Archivo<T> {
     }
 
 
-    public void guardar(ArrayList<T> arrayList,Class<T> tipoClase) {///objetos por separado
+    public void guardar(List<T> arrayList,Class<T> tipoClase) {///objetos por separado
         File archivo = new File(pricipalArchivo);
         Gson gson = new Gson();
 
@@ -89,5 +89,5 @@ public class Archivo<T> {
 
         return rescatado;
     }
-
 }
+
