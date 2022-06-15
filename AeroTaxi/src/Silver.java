@@ -18,4 +18,9 @@ public class Silver extends Avion{
     public void setPrecio(int precio) {
         this.precio = precio;
     }
+
+    @Override
+    public String toString() {
+        return " Silver";
+    }
 }

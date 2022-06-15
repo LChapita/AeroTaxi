@@ -16,7 +16,8 @@ public final class RegisterAndLogin {
     }*/
 
 
-    public User register(User user, List<User> recuperarUsuarios) {
+    public User register(List<User> recuperarUsuarios) {
+        User user=new User();
         RequestFlyMenu requestFlyMenu=new RequestFlyMenu();
         Scanner scanner = new Scanner(System.in);
         boolean verificar = false;
@@ -44,9 +45,9 @@ public final class RegisterAndLogin {
 
                 TimeUnit.MILLISECONDS.sleep(10);
 
-                verificar = requestFlyMenu.verificarUsuario(recuperarUsuarios,user.getDni());
+                scanner.nextLine();
 
-
+                verificar = RequestFlyMenu.verificarUsuario(recuperarUsuarios,user.getDni());
 
                 if (verificar){
 
@@ -99,7 +100,7 @@ public final class RegisterAndLogin {
         } while (user.getPassword().compareTo(user.getPasswordValidation()) != 0);
     }
 
-    public boolean Login(User user, List<User> recuperarUsuarios,List<Avion> recuperarAviones,List<Vuelo> recuperarVuelos) {
+    public boolean Login(User user, List<User> recuperarUsuarios,List<Avion> recuperarAviones,List<Vuelo> recuperarVuelos,Archivo archivoUsuarios,Archivo archivoAviones,Archivo archivoVuelos,User mantener) {
         boolean confirmacion=false;
         boolean verificarAdmi=false;
         Scanner scanner = new Scanner(System.in);
@@ -124,9 +125,10 @@ public final class RegisterAndLogin {
 
                 ///verificar Admi
                 verificarAdmi= Admin.verificarAdministrador(user.getDni(),user.getPasswordValidation());
+
                 if(verificarAdmi){
-                    System.out.println(verificarAdmi);
-                    Admin.menuAdmi(recuperarUsuarios,recuperarAviones,recuperarVuelos);
+
+                    Admin.menuAdmi(recuperarUsuarios,recuperarAviones,recuperarVuelos,archivoUsuarios,archivoAviones,archivoVuelos);
                     break;
                 }
 
@@ -144,9 +146,15 @@ public final class RegisterAndLogin {
         for (User userSearched : recuperarUsuarios) {
             if ((userSearched.getDni() == user.getDniValidation()) && (userSearched.getPassword().compareTo(user.getPasswordValidation()) == 0)) {
                 System.out.println("Welcome back: " + userSearched.getName() + " " + userSearched.getSurname());
+
                 confirmacion=true;
+                mantener.setAge(userSearched.getAge());
+                mantener.setName(userSearched.getName());
+                mantener.setSurname(userSearched.getSurname());
+                mantener.setDni(userSearched.getDni());
             }
         }
+
         return confirmacion;
     }
 

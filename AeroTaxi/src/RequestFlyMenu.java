@@ -344,7 +344,7 @@ public class RequestFlyMenu {
         boolean reservar = false;
         boolean disponible = false;
 
-        System.out.println("estos son los aviones disponibles: ");
+        System.out.println("Estos son los aviones disponibles: ");
         for (Avion avion : recuperarAviones) {///busco los aviones 1 por 1
             for (Vuelo vuelo : recuperarVuelos) {// busco en el registro los vuelos pactados 1 por 1
                 if (vuelo.getPartida().equals(fechaPartida) && vuelo.getTipoAvion().equals(avion)) {
@@ -361,9 +361,20 @@ public class RequestFlyMenu {
             i++;
         }
         Avion avionSeleccionado = null;
+        boolean correcto=true;
+        int opcion=0;
         if (disponible) {
-            System.out.println("Ingrese el Id del avion: ");
-            int opcion = new Scanner(System.in).nextInt();
+            do {
+                System.out.println("Ingrese el Id del avion: ");
+                opcion = new Scanner(System.in).nextInt();
+
+                if (opcion > recuperarAviones.size()){
+                    System.out.println("Ingrese un Id de avion dentro de la lista.");
+                }else {
+                    correcto=false;
+                }
+
+            }while (correcto);
             avionSeleccionado = recuperarAviones.get(opcion);
         } else {
             System.out.println("No hay aviones disponibles");
@@ -436,7 +447,7 @@ public class RequestFlyMenu {
             for (User usuario : recuperarUsuarios) {
                 if (usuario.getDni() == dni) {
                     verificar = true;
-                    System.out.println("macaco9");
+                    //System.out.println("macaco9");
                 }
 
             }
@@ -455,7 +466,7 @@ public class RequestFlyMenu {
         }
         return aux;
     }
-
+    /*
     public static boolean pruebaMetodos(List<User> recuperarUsuarios, List<Avion> recuperarAviones, List<Vuelo> recuperarVuelos, int dni) {
 
         boolean correcto = false;
@@ -468,7 +479,25 @@ public class RequestFlyMenu {
         }
         return correcto;
 
-    }
+    }*/
+    public static boolean SolicitarVuelo(List<User> recuperarUsuarios, List<Avion> recuperarAviones, List<Vuelo> recuperarVuelos, int dni) {
 
+        boolean correcto =false;
+        User nuevo=null;
+        boolean existe=verificarUsuario(recuperarUsuarios, dni);
+        if(existe) {
+            nuevo=retornarUnUsuario(recuperarUsuarios,dni);
+            Vuelo nuevoVuelo=sacarVuelo(nuevo,recuperarVuelos,recuperarAviones);
+            if (nuevo==null){
+                System.out.println("No se pudo cargar el Vuelo");
+            }else {
+
+                correcto=true;
+                recuperarVuelos.add(sacarVuelo(nuevo,recuperarVuelos,recuperarAviones));
+            }
+        }
+        return correcto;
+
+    }
 
 }

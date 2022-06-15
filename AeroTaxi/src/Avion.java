@@ -58,5 +58,14 @@ public class Avion{
         return propulsion;
     }
 
+    @Override
+    public String toString() {
+        return "Avion{" +
+                "combustible=" + combustible +
+                ", capacidadMAxima=" + capacidadMAxima +
+                ", velocidadMaxima=" + velocidadMaxima +
+                ", propulsion=" + propulsion +
+                '}';
+    }
 
 }

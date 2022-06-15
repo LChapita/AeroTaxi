@@ -71,7 +71,7 @@ public abstract class Persona implements AccionesDePersona,Comparable, Comparato
     }
 
     @Override
-    public List<User> modificarUsuario(List<User> usuarios,int dni) throws InterruptedException {
+    public List<User> modificarUsuario(List<User> usuarios,int dni){
         return null;
     }
 

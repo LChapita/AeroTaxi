@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 
 
-public class Vuelo implements Serializable,Implementacion{
+public class Vuelo implements Serializable, Implementacion{
 
     private Ciudad origen;
     private Ciudad destino;
@@ -124,6 +124,7 @@ public class Vuelo implements Serializable,Implementacion{
         //(Cantidad de kms * Costo del km) + (cantidad de pasajeros * 3500) + (Tarifa del tipo de avión)
         return ((this.obtenerDistancia() * this.tipoAvion.getCostoPorKilometro()) + (cantidadPasajeros * 3500) + precio);
     }
+
 
 
 }
