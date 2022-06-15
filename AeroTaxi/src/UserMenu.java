@@ -125,6 +125,7 @@ public class UserMenu {
                 switch (option){
                     case(1):{
                         RequestFly(recuperarUsuarios, recuperarAvion, recuperarVuelos, ArchivoVuelos);
+
                         break;
                     }
 
@@ -154,13 +155,14 @@ public class UserMenu {
         } while(option != 4);
     }
 
-    private void RequestFly(List<User> recuperarUsuarios, List<Avion> recuperarAvion, List<Vuelo> recuperarVuelos, Archivo<Vuelo> ArchivoVuelo){ // pedido de vuelo, más no de menú
+    private void RequestFly(List<User> recuperarUsuarios, List<Avion> recuperarAvion, List<Vuelo> recuperarVuelos, Archivo archivoVuelo){ // pedido de vuelo, más no de menú
         System.out.println("Ingrese su dni para realizar un pedido: ");
         int dni=new Scanner(System.in).nextInt();
 
-        boolean correcto = RequestFlyMenu.SolicitarVuelo(recuperarUsuarios, recuperarAvion, recuperarVuelos, dni);
+        boolean correcto = RequestFlyMenu.SolicitarVuelo(recuperarUsuarios, recuperarAvion, recuperarVuelos, dni,archivoVuelo);
         if(correcto)
-            ArchivoVuelo.guardar(recuperarVuelos, Vuelo.class);
+            System.out.println(correcto);
+            //archivoVuelo.guardar(recuperarVuelos, Vuelo.class);16-16-06-2022
     }
 
     public void exitOption() {

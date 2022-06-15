@@ -279,7 +279,6 @@ public class RequestFlyMenu {
         }
         ArrayList<Ciudad> trayectos = new ArrayList<Ciudad>();
 
-
         trayectos.add(Ciudad.BUE);
         trayectos.add(Ciudad.COR);
         trayectos.add(Ciudad.MVD);
@@ -287,6 +286,8 @@ public class RequestFlyMenu {
 
         Ciudad origen = null;
         Ciudad destino = null;
+
+        System.out.println(String.valueOf(fechaIngresada));
 
         System.out.println("Seleccione la ciudad de origen");
 
@@ -320,7 +321,7 @@ public class RequestFlyMenu {
         Vuelo reservado = null;
         int respuesta = 0;
         if (avionReservado != null) {
-            Vuelo nuevoVuelo = new Vuelo(origen, destino, avionReservado, fechaIngresada, cantidadPasajeros, usuario);
+            Vuelo nuevoVuelo = new Vuelo(origen, destino, avionReservado, String.valueOf(fechaIngresada), cantidadPasajeros, usuario);
             System.out.println("Costo del vuelo: $" + nuevoVuelo.calcularCosto());
             System.out.println("Confirmar= 1 " + "/ Cancelar= 0 ");
             do {
@@ -346,12 +347,14 @@ public class RequestFlyMenu {
 
         System.out.println("Estos son los aviones disponibles: ");
         for (Avion avion : recuperarAviones) {///busco los aviones 1 por 1
-            for (Vuelo vuelo : recuperarVuelos) {// busco en el registro los vuelos pactados 1 por 1
-                if (vuelo.getPartida().equals(fechaPartida) && vuelo.getTipoAvion().equals(avion)) {
-                    //encuentro el registro de vuelo y si se encuentra la fecha y el avion elegidos
-                    //entonces el avion esta reservado y no se puede usar
-                    reservar = true;
+            if (recuperarVuelos != null) {
+                for (Vuelo vuelo : recuperarVuelos) {// busco en el registro los vuelos pactados 1 por 1
+                    if (vuelo.getPartida().equals(fechaPartida) && vuelo.getTipoAvion().equals(avion)) {
+                        //encuentro el registro de vuelo y si se encuentra la fecha y el avion elegidos
+                        //entonces el avion esta reservado y no se puede usar
+                        reservar = true;
 
+                    }
                 }
             }
             if (!reservar && avion.getCapacidadMAxima() >= cantidadPasajeros) {
@@ -360,21 +363,22 @@ public class RequestFlyMenu {
             }
             i++;
         }
+
         Avion avionSeleccionado = null;
-        boolean correcto=true;
-        int opcion=0;
+        boolean correcto = true;
+        int opcion = 0;
         if (disponible) {
             do {
                 System.out.println("Ingrese el Id del avion: ");
                 opcion = new Scanner(System.in).nextInt();
 
-                if (opcion > recuperarAviones.size()){
+                if (opcion > recuperarAviones.size()) {
                     System.out.println("Ingrese un Id de avion dentro de la lista.");
-                }else {
-                    correcto=false;
+                } else {
+                    correcto = false;
                 }
 
-            }while (correcto);
+            } while (correcto);
             avionSeleccionado = recuperarAviones.get(opcion);
         } else {
             System.out.println("No hay aviones disponibles");
@@ -392,7 +396,7 @@ public class RequestFlyMenu {
             System.out.println("No hay vuelos. ");
         }
     }
-
+    /*
     public static Vuelo cancelarUnVuelo(User usuario, LocalDateTime fechaVuelo, ArrayList<Vuelo> recuperarVuelos) {
         boolean hallado = false;
         Vuelo vuelo = null;
@@ -414,7 +418,7 @@ public class RequestFlyMenu {
         }
         return vuelo;
 
-    }
+    }*/
 
     public static String verTipoAvionContratado(List<Vuelo> recuperarVuelos, User usuario) {///puede usarse para ver que tipo de avion contrato cada cliente
         //se debe de utilizar en una lista de clientes
@@ -443,7 +447,7 @@ public class RequestFlyMenu {
 
     public static boolean verificarUsuario(List<User> recuperarUsuarios, int dni) {
         boolean verificar = false;
-        if (!(recuperarUsuarios==null)) {
+        if (!(recuperarUsuarios == null)) {
             for (User usuario : recuperarUsuarios) {
                 if (usuario.getDni() == dni) {
                     verificar = true;
@@ -466,6 +470,7 @@ public class RequestFlyMenu {
         }
         return aux;
     }
+
     /*
     public static boolean pruebaMetodos(List<User> recuperarUsuarios, List<Avion> recuperarAviones, List<Vuelo> recuperarVuelos, int dni) {
 
@@ -480,21 +485,19 @@ public class RequestFlyMenu {
         return correcto;
 
     }*/
-    public static boolean SolicitarVuelo(List<User> recuperarUsuarios, List<Avion> recuperarAviones, List<Vuelo> recuperarVuelos, int dni) {
+    public static boolean SolicitarVuelo(List<User> recuperarUsuarios, List<Avion> recuperarAviones, List<Vuelo> recuperarVuelos, int dni,Archivo archivoVuelo) {
 
-        boolean correcto =false;
-        User nuevo=null;
-        boolean existe=verificarUsuario(recuperarUsuarios, dni);
-        if(existe) {
-            nuevo=retornarUnUsuario(recuperarUsuarios,dni);
-            Vuelo nuevoVuelo=sacarVuelo(nuevo,recuperarVuelos,recuperarAviones);
-            if (nuevo==null){
-                System.out.println("No se pudo cargar el Vuelo");
-            }else {
+        boolean correcto = false;
+        User nuevo = null;
+        boolean existe = verificarUsuario(recuperarUsuarios, dni);
+        if (existe) {
+            nuevo = retornarUnUsuario(recuperarUsuarios, dni);
+            Vuelo nuevoVuelo = sacarVuelo(nuevo, recuperarVuelos, recuperarAviones);
+            System.out.println(nuevoVuelo.toString());
+            List<Vuelo> auxVuelo=new ArrayList<>();
 
-                correcto=true;
-                recuperarVuelos.add(sacarVuelo(nuevo,recuperarVuelos,recuperarAviones));
-            }
+            auxVuelo.add(nuevoVuelo);
+            archivoVuelo.guardar(auxVuelo,Vuelo.class);
         }
         return correcto;
 

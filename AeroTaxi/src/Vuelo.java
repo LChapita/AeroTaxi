@@ -13,13 +13,13 @@ public class Vuelo implements Serializable, Implementacion{
 
     private Avion tipoAvion;
 
-    private LocalDateTime partida;
-    private LocalDateTime llegada;
+    private String partida;
+    private String llegada;
 
     private int cantidadPasajeros;
     private User cliente;
 
-    public Vuelo(Ciudad origen, Ciudad destino, Avion tipoAvion, LocalDateTime partida, int cantidadPasajeros, User cliente) {//en principio es lo que se carga
+    public Vuelo(Ciudad origen, Ciudad destino, Avion tipoAvion, String partida, int cantidadPasajeros, User cliente) {//en principio es lo que se carga
         this.origen = origen;
         this.destino = destino;
         this.tipoAvion = tipoAvion;
@@ -40,11 +40,11 @@ public class Vuelo implements Serializable, Implementacion{
         return tipoAvion;
     }
 
-    public LocalDateTime getPartida() {
+    public String getPartida() {
         return partida;
     }
 
-    public LocalDateTime getLlegada() {
+    public String getLlegada() {
         return llegada;
     }
 
@@ -72,11 +72,11 @@ public class Vuelo implements Serializable, Implementacion{
         this.tipoAvion = tipoAvion;
     }
 
-    public void setPartida(LocalDateTime partida) {
+    public void setPartida(String partida) {
         this.partida = partida;
     }
 
-    public void setLlegada(LocalDateTime llegada) {
+    public void setLlegada(String llegada) {
         this.llegada = llegada;
     }
 
@@ -125,6 +125,16 @@ public class Vuelo implements Serializable, Implementacion{
         return ((this.obtenerDistancia() * this.tipoAvion.getCostoPorKilometro()) + (cantidadPasajeros * 3500) + precio);
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Vuelo{" +
+                "origen=" + origen +
+                ", destino=" + destino +
+                ", tipoAvion=" + tipoAvion +
+                ", partida=" + partida +
+                ", llegada=" + llegada +
+                ", cantidadPasajeros=" + cantidadPasajeros +
+                ", cliente=" + cliente +
+                '}';
+    }
 }

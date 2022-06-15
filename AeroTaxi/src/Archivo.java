@@ -19,7 +19,7 @@ public class Archivo<T> {
 
     public void guardar(List<T> list,Class<T> tipoClase) {///objetos por separado
         File archivo = new File(pricipalArchivo);
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         if (!archivo.exists()) {
             try {
