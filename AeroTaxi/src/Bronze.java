@@ -1,19 +1,14 @@
 public class Bronze extends Avion{
-    private int precio;
+    private static float precio=3000F;
+
+    public static float costoKilometro=150;
     public Bronze(){}
 
     public Bronze(int combustible, int capacidadMAxima, Propulsion propulsion) {
-        super(combustible, capacidadMAxima, propulsion);
-        this.precio = 3000;
+        super(combustible, capacidadMAxima, propulsion,precio,costoKilometro);
+        this.precio = 3000F;
     }
 
-    public void setPresio(int precio) {
-        this.precio = precio;
-    }
-
-    public int getPrecio() {
-        return precio;
-    }
 
 
 

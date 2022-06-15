@@ -322,7 +322,8 @@ public class RequestFlyMenu {
         int respuesta = 0;
         if (avionReservado != null) {
             Vuelo nuevoVuelo = new Vuelo(origen, destino, avionReservado, String.valueOf(fechaIngresada), cantidadPasajeros, usuario);
-            System.out.println("Costo del vuelo: $" + nuevoVuelo.calcularCosto());
+            float costoVuelo=nuevoVuelo.calcularCosto(nuevoVuelo);
+            System.out.println("Costo del vuelo: $" + costoVuelo);
             System.out.println("Confirmar= 1 " + "/ Cancelar= 0 ");
             do {
                 respuesta = new Scanner(System.in).nextInt();
@@ -396,15 +397,21 @@ public class RequestFlyMenu {
             System.out.println("No hay vuelos. ");
         }
     }
-    /*
-    public static Vuelo cancelarUnVuelo(User usuario, LocalDateTime fechaVuelo, ArrayList<Vuelo> recuperarVuelos) {
+
+    public static Vuelo cancelarUnVuelo(User usuario, String fechaVuelo, List<Vuelo> recuperarVuelos) {
         boolean hallado = false;
         Vuelo vuelo = null;
+
         for (Vuelo aux : recuperarVuelos) {
-            if (aux.getPartida().compareTo(fechaVuelo) == 0 && aux.getCliente().getDni() == usuario.getDni()) {
-                if (aux.getPartida().isAfter(LocalDateTime.now())) {
+            if ((aux.getPartida().compareTo(fechaVuelo) == 0 )&& (aux.getCliente().getDni() == usuario.getDni())){
+
+                LocalDateTime fecha = LocalDateTime.parse(aux.getPartida());
+                //System.out.println(fecha);
+                //LocalDateTime fechaVueloLocalDate=LocalDateTime.parse(aux.getPartida());
+
+                if (fecha.isAfter(LocalDateTime.now())) {
                     vuelo = aux;
-                } else {
+                }  else {
                     System.out.println("El vuelo debe cancelarse con al menos un dia de anticipacion.");
                 }
                 hallado = true;
@@ -418,7 +425,7 @@ public class RequestFlyMenu {
         }
         return vuelo;
 
-    }*/
+    }
 
     public static String verTipoAvionContratado(List<Vuelo> recuperarVuelos, User usuario) {///puede usarse para ver que tipo de avion contrato cada cliente
         //se debe de utilizar en una lista de clientes
@@ -494,7 +501,7 @@ public class RequestFlyMenu {
             nuevo = retornarUnUsuario(recuperarUsuarios, dni);
             Vuelo nuevoVuelo = sacarVuelo(nuevo, recuperarVuelos, recuperarAviones);
             System.out.println(nuevoVuelo.toString());
-            List<Vuelo> auxVuelo=new ArrayList<>();
+            List<Vuelo> auxVuelo=recuperarVuelos;///16-17-06-2022
 
             auxVuelo.add(nuevoVuelo);
             archivoVuelo.guardar(auxVuelo,Vuelo.class);

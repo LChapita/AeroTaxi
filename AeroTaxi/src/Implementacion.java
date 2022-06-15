@@ -1,6 +1,6 @@
 public interface Implementacion {
 
    int obtenerDistancia();
-   float calcularCosto();
+   float calcularCosto(Vuelo vuelo);
 
 }

@@ -1,19 +1,21 @@
 public class Avion{
     private int combustible;
-    private float costoPorKilometro;
     private int capacidadMAxima;
     private int velocidadMaxima;
     private Propulsion propulsion;
+    private String tipoAvion;
+    private float costoPorKilometro;
+    private float precio;
 
     public Avion() {
     }
 
-    public Avion(int combustible, int capacidadMAxima, Propulsion propulsion) {
+    public Avion(int combustible, int capacidadMAxima, Propulsion propulsion,float precio,float costoPorKilometro) {
         this.combustible = combustible;
         this.capacidadMAxima = capacidadMAxima;
         this.propulsion = propulsion;
-
-        this.costoPorKilometro = costoPorKilometro;
+        this.precio=precio;
+        this.costoPorKilometro=costoPorKilometro;
         this.velocidadMaxima = propulsion.getVelocidadMaxima();
 
     }
@@ -22,9 +24,6 @@ public class Avion{
         this.combustible = combustible;
     }
 
-    public void setCostoPorKilometro(float costoPorKilometro) {
-        this.costoPorKilometro = costoPorKilometro;
-    }
 
     public void setCapacidadMAxima(int capacidadMAxima) {
         this.capacidadMAxima = capacidadMAxima;
@@ -42,9 +41,6 @@ public class Avion{
         return combustible;
     }
 
-    public float getCostoPorKilometro() {
-        return costoPorKilometro;
-    }
 
     public int getCapacidadMAxima() {
         return capacidadMAxima;
@@ -68,4 +64,11 @@ public class Avion{
                 '}';
     }
 
+    public float getPrecio() {
+        return precio;
+    }
+
+    public float getCostoPorKilometro() {
+        return costoPorKilometro;
+    }
 }

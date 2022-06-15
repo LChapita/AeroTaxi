@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -135,6 +136,8 @@ public class Admin extends Persona {
             System.out.println("1- Lista Usuarios: \n");
             System.out.println("2- Lista Aviones : \n");
             System.out.println("3- Lista Vuelos  : \n");
+            System.out.println("4- Lista Vuelos por Usuario  : \n");
+            System.out.println("5- Lista de Vuelos por fecha : \n");
             System.out.println("0- Exit  : \n");
 
             opcion = new Scanner(System.in).nextInt();
@@ -150,6 +153,15 @@ public class Admin extends Persona {
                 case (3):
                     //Lista vuelos o vueloPedidos
                     admin.mostrarVuelos(recuperarVuelos);
+                    break;
+                case (4):
+                    admin.mostrarVueloPorUsuario(recuperarUsuarios,recuperarVuelos);
+                    break;
+                case (5):
+                    System.out.println("Ingrese una fecha para ver todos los vuelos programados antes de la fecha ingresada");
+                    System.out.println("El ingreso debe ser HH-dd-MM-yyyy");;
+                    LocalDateTime fecha= RequestFlyMenu.solicitarFecha();
+                    admin.vuelosPorFecha(recuperarVuelos,fecha);
                     break;
                 case (0):
                     break;
@@ -178,6 +190,48 @@ public class Admin extends Persona {
             System.out.println("No se encontraron Vuelos");
         }
 
+    }
+
+    public void mostrarVueloPorUsuario(List<User> usuarios,List<Vuelo> vuelos) {
+        float costoTotal;
+        if (usuarios != null) {
+            for (User usuario : usuarios) {
+                costoTotal=0;
+                for (Vuelo vuelo: vuelos){
+                    if (usuario.getDni()==vuelo.getCliente().getDni()){
+                        costoTotal=vuelo.calcularCosto(vuelo)+costoTotal;
+                        System.out.println(mostrarUsuarioYsuVuelo(usuario,vuelo));
+
+                    }
+                }
+
+                System.out.println("\nEl total del costo de sus vuelo es de: " + costoTotal);
+                System.out.println("------------------------------------------------------");
+            }
+        } else {
+            System.out.println("No se encontraron usuarios");
+        }
+    }
+
+    public String mostrarUsuarioYsuVuelo(User usuario,Vuelo vuelo) {
+        return "Usuario: "+usuario.getName()+" "+usuario.getSurname() +" tiene Un vuelo programado el dia: " +vuelo.getPartida() +
+                "\nDesde " + vuelo.getOrigen().getNombreCiudad()+" Hasta "+vuelo.getDestino().getNombreCiudad()+
+                "\nEl costo de este vuelo es de: "+vuelo.calcularCosto(vuelo);
+
+    }
+    public void vuelosPorFecha(List<Vuelo> vuelos, LocalDateTime fecha){
+        if (vuelos != null) {
+            System.out.println("Se mostraran los vuelos que esten antes de la fecha ingresada.");
+            for (Vuelo vuelo : vuelos) {
+                LocalDateTime fechaVueloAstring=LocalDateTime.parse(vuelo.getPartida());
+                if (fechaVueloAstring.isBefore(fecha)){
+
+                    System.out.println(vuelo.toString());//12-30-09-2022
+                }
+            }
+        } else {
+            System.out.println("No se encontraron Vuelos");
+        }
     }
 
 }

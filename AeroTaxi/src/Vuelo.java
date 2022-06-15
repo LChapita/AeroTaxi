@@ -106,24 +106,31 @@ public class Vuelo implements Serializable, Implementacion{
         return distancias.get(ruta);
     }
     @Override
-    public float calcularCosto() {
-        int precio = 0;
+    public float calcularCosto(Vuelo vuelo) {
+        float precio=0;
         //quiero comparar 2 clase para retornar el precio
-        if(this.tipoAvion.getClass().equals(Gold.class)){
-            precio= ((Gold) tipoAvion).getPrecio();
-            //System.out.println(precio);
+        //System.out.println(vuelo.tipoAvion.getPrecio());
+        /*
+        if(vuelo.tipoAvion.getTipoAvion().compareTo("avionGold")==0){
+            System.out.println("macaco");
         }else{
-            if(this.tipoAvion.getClass().equals(Silver.class)){
+            if(vuelo.tipoAvion instanceof Silver){
                 precio= ((Silver) tipoAvion).getPrecio();
             }else{
-                if (this.tipoAvion.getClass().equals(Bronze.class)){
+                if (vuelo.tipoAvion instanceof Bronze){
                     precio= ((Bronze) tipoAvion).getPrecio();
                 }
             }
-        }
+        }*/
         //(Cantidad de kms * Costo del km) + (cantidad de pasajeros * 3500) + (Tarifa del tipo de avión)
-        return ((this.obtenerDistancia() * this.tipoAvion.getCostoPorKilometro()) + (cantidadPasajeros * 3500) + precio);
+        precio=vuelo.tipoAvion.getPrecio();
+        float costoPorkm=0;
+        costoPorkm=vuelo.tipoAvion.getCostoPorKilometro();
+        //System.out.println(this.obtenerDistancia());
+        //System.out.println(vuelo.tipoAvion.getCostoPorKilometro()+"macaco");
+        return ((this.obtenerDistancia() * costoPorkm) + (cantidadPasajeros * 3500) + precio);//16-25-07-2022
     }
+
 
     @Override
     public String toString() {
@@ -132,9 +139,9 @@ public class Vuelo implements Serializable, Implementacion{
                 ", destino=" + destino +
                 ", tipoAvion=" + tipoAvion +
                 ", partida=" + partida +
-                ", llegada=" + llegada +
                 ", cantidadPasajeros=" + cantidadPasajeros +
                 ", cliente=" + cliente +
                 '}';
     }
+
 }

@@ -1,5 +1,6 @@
 
 
+import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -23,7 +24,7 @@ public class UserMenu {
         boolean datos=archivoAviones.existenDatos(recuperarAvion);
         User userRegister=new User();
 
-        if(datos==true){
+        if(datos){
             Avion avionGold=new Gold(15000,5,Propulsion.REACCION,true,true);
             Avion avionSilver=new Silver(5000,15,Propulsion.PISTONES,true);
             Avion avionBonze=new Bronze(11000,40,Propulsion.PISTONES);
@@ -101,7 +102,7 @@ public class UserMenu {
     }
 
 
-    private void LoginOption(List<User> recuperarUsuarios, List<Avion> recuperarAvion, List<Vuelo> recuperarVuelos,Archivo archivoUsuarios, Archivo archivoAviones, Archivo<Vuelo> ArchivoVuelos, User mantener){
+    private void LoginOption(List<User> recuperarUsuarios, List<Avion> recuperarAvion, List<Vuelo> recuperarVuelos,Archivo archivoUsuarios, Archivo archivoAviones, Archivo archivoVuelos, User mantener){
         Scanner scanner = new Scanner(System.in);
         int option = 0;
 
@@ -111,7 +112,8 @@ public class UserMenu {
             System.out.println("1 - realizar un pedido de vuelo:\n");
             System.out.println("2 - modificar información:\n");
             System.out.println("3 - ver información\n");
-            System.out.println("4 - salir:\n");
+            System.out.println("4 - cancelar vuelo\n");
+            System.out.println("0 - salir:\n");
             System.out.println("---------------------------------\n");
 
 
@@ -121,10 +123,10 @@ public class UserMenu {
                 System.out.println("Solo valores numéricos\n");
             }
 
-            if(option != 4) // para verificar que si el usuario quiere salir, no haga el switch con las otras opciones
+            if(option != 5) // para verificar que si el usuario quiere salir, no haga el switch con las otras opciones
                 switch (option){
                     case(1):{
-                        RequestFly(recuperarUsuarios, recuperarAvion, recuperarVuelos, ArchivoVuelos);
+                        RequestFly(recuperarUsuarios, recuperarAvion, recuperarVuelos, archivoVuelos);
 
                         break;
                     }
@@ -151,8 +153,24 @@ public class UserMenu {
                         System.out.println("-----------------\n");
                         break;
                     }
+                    case(4):{
+                        System.out.println("Cancelar Vuelo");
+                        User user= RequestFlyMenu.retornarUnUsuario(recuperarUsuarios,mantener.getDni());
+                        System.out.println("Ingrese fecha de vuelo: \n");
+                        LocalDateTime fechaCancela= RequestFlyMenu.solicitarFecha();
+                        Vuelo cancelar= RequestFlyMenu.cancelarUnVuelo(user,String.valueOf(fechaCancela),recuperarVuelos);
+                        List<Vuelo> vueloCancelado=recuperarVuelos;
+
+                        vueloCancelado.remove(cancelar);
+                        archivoVuelos.guardar(vueloCancelado,Vuelo.class);
+                        break;
+                    }
+                    case(0): {
+
+                        break;
+                    }
                 }
-        } while(option != 4);
+        } while(option != 0);
     }
 
     private void RequestFly(List<User> recuperarUsuarios, List<Avion> recuperarAvion, List<Vuelo> recuperarVuelos, Archivo archivoVuelo){ // pedido de vuelo, más no de menú

@@ -1,23 +1,17 @@
 public class Silver extends Avion{
     private boolean conexionWifi;
-    private int precio;
+    private static float precio=4000F;
 
+    public static float costoKilometro=225;
     public Silver() {
     }
 
     public Silver(int combustible, int capacidadMAxima, Propulsion propulsion, boolean conexionWifi) {
-        super(combustible, capacidadMAxima, propulsion);
-        this.precio = 4000;
+        super(combustible, capacidadMAxima, propulsion,precio,costoKilometro);
+        this.precio = 4000F;
         this.conexionWifi = conexionWifi;
     }
 
-    public int getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(int precio) {
-        this.precio = precio;
-    }
 
     @Override
     public String toString() {
