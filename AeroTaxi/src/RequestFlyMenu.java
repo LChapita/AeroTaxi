@@ -89,7 +89,7 @@ public class RequestFlyMenu {
 
         }
         if (respuesta == 0) {
-            System.out.println("Se cancelo la reserva.");
+            System.out.println("Se canceló la reserva.");
         }
 
         return reservado;
@@ -242,6 +242,7 @@ public class RequestFlyMenu {
 
     public static boolean verificarUsuario(List<User> recuperarUsuarios, int dni) {
         boolean verificar = false;
+        if(!(recuperarUsuarios == null))
         for (User usuario : recuperarUsuarios) {
             if (usuario.getDni() == dni) {
                 verificar = true;

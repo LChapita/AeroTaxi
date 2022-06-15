@@ -18,7 +18,7 @@ public class UserMenu{
 
 
         RegisterAndLogin userCreation = new RegisterAndLogin();
-        User user = new User();
+        User userControler = new User();
         Scanner scanner = new Scanner(System.in);
 
         int option = 0;
@@ -42,16 +42,17 @@ public class UserMenu{
 
             switch (option) {
                 case 1:
-                    userCreation.Register(user, recuperarUsuarios);
+                    userControler = userCreation.Register(userControler, recuperarUsuarios);
+                    recuperarUsuarios.add(userControler);
                     archivoUsuarios.guardar(recuperarUsuarios, User.class);
                     break;
 
                 case 2:
-                    boolean confirmarLogin = userCreation.Login(user, recuperarUsuarios);
+                    boolean confirmarLogin = userCreation.Login(userControler, recuperarUsuarios);
                     //userCreation.Login(user, recuperarUsuarios);
 
                     if(confirmarLogin)
-                        LoginOption(recuperarUsuarios, recuperarAvion, recuperarVuelos, archivoVuelos);
+                        LoginOption(recuperarUsuarios, recuperarAvion, recuperarVuelos, archivoVuelos, userControler);
 
                     else
                         System.out.println("El usuario no se pudo encontrar\n");
@@ -65,7 +66,7 @@ public class UserMenu{
     }
 
 
-    private void LoginOption(List<User> recuperarUsuarios, List<Avion> recuperarAvion, List<Vuelo> recuperarVuelos, Archivo<Vuelo> ArchivoVuelos){
+    private void LoginOption(List<User> recuperarUsuarios, List<Avion> recuperarAvion, List<Vuelo> recuperarVuelos, Archivo<Vuelo> ArchivoVuelos, User user){
         Scanner scanner = new Scanner(System.in);
         int option = 0;
 
@@ -96,10 +97,15 @@ public class UserMenu{
 
 
 
+
+
                 }
 
                 case(3):{
                     // ver información
+                    System.out.println("-----------------\n");
+                    System.out.println(user.toString());
+                    System.out.println("-----------------\n");
                 }
             }
         } while(option != 4);

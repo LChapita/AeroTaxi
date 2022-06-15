@@ -16,9 +16,9 @@ public final class RegisterAndLogin{
     public RegisterAndLogin(){}
 
 
-    public void Register(User user, List<User> userList){
+    public User Register(User user, List<User> userList){
+        RequestFlyMenu requestFlyMenu = new RequestFlyMenu();
         Scanner scanner = new Scanner(System.in);
-
         boolean verificar = false;
 
         do {
@@ -60,13 +60,13 @@ public final class RegisterAndLogin{
                 System.out.println("Time out, try again later");
                 scanner.nextLine();
             }
-        //} while(user.getAge() == 0);
         } while(verificar);
 
         passwordCreation(user);
 
-        //userArrayList.add(user); // agrego el usuario ya registrado a la lista
-        userList.add(user); // agrego el usuario ya registrado a la lista
+        //userList.add(user); // agrego el usuario ya registrado a la lista
+        //verificar = requestFlyMenu.verificarUsuario(recuperarUsuarios,user.getDni());
+        return user;
     }
 
     public void passwordCreation(User user){

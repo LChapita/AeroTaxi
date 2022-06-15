@@ -1,4 +1,4 @@
-public abstract class Avion{
+public class Avion{ // ver de quitarle el abstract a la clase Avion para poder crear los archivos
     private int combustible;
     private float costoPorKilometro;
     private int capacidadMAxima;
@@ -59,4 +59,14 @@ public abstract class Avion{
     }
 
 
+    @Override
+    public String toString() {
+        return "Avion{" +
+                "combustible=" + combustible +
+                ", costoPorKilometro=" + costoPorKilometro +
+                ", capacidadMAxima=" + capacidadMAxima +
+                ", velocidadMaxima=" + velocidadMaxima +
+                ", propulsion=" + propulsion +
+                '}';
+    }
 }
