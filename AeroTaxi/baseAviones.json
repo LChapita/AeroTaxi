@@ -1,0 +1,29 @@
+[
+  {
+    "conexionWifi": true,
+    "catering": true,
+    "combustible": 15000,
+    "capacidadMAxima": 5,
+    "velocidadMaxima": 1000,
+    "propulsion": "REACCION",
+    "costoPorKilometro": 300.0,
+    "precio": 6000.0
+  },
+  {
+    "conexionWifi": true,
+    "combustible": 5000,
+    "capacidadMAxima": 15,
+    "velocidadMaxima": 250,
+    "propulsion": "PISTONES",
+    "costoPorKilometro": 225.0,
+    "precio": 4000.0
+  },
+  {
+    "combustible": 11000,
+    "capacidadMAxima": 40,
+    "velocidadMaxima": 250,
+    "propulsion": "PISTONES",
+    "costoPorKilometro": 150.0,
+    "precio": 3000.0
+  }
+]

@@ -1,0 +1,23 @@
+[
+  {
+    "password": "123",
+    "name": "Bruno",
+    "surname": "Gregorio",
+    "dni": 456,
+    "age": 25
+  },
+  {
+    "password": "123",
+    "name": "Agustin",
+    "surname": "Chapa",
+    "dni": 789,
+    "age": 24
+  },
+  {
+    "password": "123",
+    "name": "Matias",
+    "surname": "Kinder",
+    "dni": 147,
+    "age": 23
+  }
+]

@@ -1,0 +1,65 @@
+[
+  {
+    "origen": "BUE",
+    "destino": "COR",
+    "tipoAvion": {
+      "combustible": 11000,
+      "capacidadMAxima": 40,
+      "velocidadMaxima": 250,
+      "propulsion": "PISTONES",
+      "costoPorKilometro": 150.0,
+      "precio": 3000.0
+    },
+    "partida": "2022-07-25T16:00",
+    "cantidadPasajeros": 5,
+    "cliente": {
+      "password": "123",
+      "name": "Agustin",
+      "surname": "Chapa",
+      "dni": 789,
+      "age": 24
+    }
+  },
+  {
+    "origen": "BUE",
+    "destino": "COR",
+    "tipoAvion": {
+      "combustible": 5000,
+      "capacidadMAxima": 15,
+      "velocidadMaxima": 250,
+      "propulsion": "PISTONES",
+      "costoPorKilometro": 225.0,
+      "precio": 4000.0
+    },
+    "partida": "2022-06-27T16:00",
+    "cantidadPasajeros": 0,
+    "cliente": {
+      "password": "123",
+      "name": "Matias",
+      "surname": "Kinder",
+      "dni": 147,
+      "age": 23
+    }
+  },
+  {
+    "origen": "BUE",
+    "destino": "SCL",
+    "tipoAvion": {
+      "combustible": 15000,
+      "capacidadMAxima": 5,
+      "velocidadMaxima": 1000,
+      "propulsion": "REACCION",
+      "costoPorKilometro": 300.0,
+      "precio": 6000.0
+    },
+    "partida": "2022-09-29T19:00",
+    "cantidadPasajeros": 0,
+    "cliente": {
+      "password": "123",
+      "name": "Agustin",
+      "surname": "Chapa",
+      "dni": 789,
+      "age": 24
+    }
+  }
+]

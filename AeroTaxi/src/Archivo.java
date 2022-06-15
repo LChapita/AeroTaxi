@@ -17,9 +17,9 @@ public class Archivo<T> {
     }
 
 
-    public void guardar(ArrayList<T> arrayList,Class<T> tipoClase) {///objetos por separado
+    public void guardar(List<T> list,Class<T> tipoClase) {///objetos por separado
         File archivo = new File(pricipalArchivo);
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         if (!archivo.exists()) {
             try {
@@ -36,7 +36,7 @@ public class Archivo<T> {
             ///como crear un nuevo archivo?
             salida = new BufferedWriter(new FileWriter(archivo));
 
-            for (T aux : arrayList) {//obligado
+            for (T aux : list) {//obligado
                 baseArchivo.add(aux);
             }
             gson.toJson(baseArchivo,salida);
@@ -59,7 +59,14 @@ public class Archivo<T> {
         if (!archivo.exists()) {
             return null;
         }*/
-
+        /*
+        if (!archivo.exists()) {
+            try {
+                archivo.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }*/
         Type colecctionType=TypeToken.getParameterized(List.class,tipoClase).getType();
 
         BufferedReader entrada = null;
@@ -69,16 +76,13 @@ public class Archivo<T> {
 
             rescatado = gson.fromJson(entrada, colecctionType);
 
-
             /*String leo = null;
             while ((leo = entrada.readLine()) != null) {
                 rescatado.add((T) leo);
             }*/
 
-
-
         } catch (IOException e) {
-            System.out.println("error base de datos");
+            //System.out.println("error base de datos"+ tipoClase);///verificar bien que problema tiene al rescatar
         } finally {
             if(entrada!=null){
                 try{
@@ -94,6 +98,13 @@ public class Archivo<T> {
     }
 
 
+    public boolean existenDatos(List<T> lista){
+        boolean tienen=false;
+        if(lista.isEmpty()){
+            tienen=true;
+        }
+        return tienen;
+    }
 
     //System.out.println("macaco");
 
