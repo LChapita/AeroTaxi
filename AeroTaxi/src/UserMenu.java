@@ -17,6 +17,7 @@ public class UserMenu {
         Archivo<Vuelo> archivoVuelos = new Archivo<>("baseVuelos.json");
 
         List<User> recuperarUsuarios = archivoUsuarios.rescatar(User.class);
+
         List<Avion> recuperarAvion = archivoAviones.rescatar(Avion.class);
 
         List<Vuelo> recuperarVuelos = archivoVuelos.rescatar(Vuelo.class);

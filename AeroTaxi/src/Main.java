@@ -1,5 +1,8 @@
+import java.net.Proxy;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -425,11 +428,26 @@ public class Main {
 
 
 
-
+        ///****************************
         UserMenu userMenu=new UserMenu();
-
-
         userMenu.Options();
+
+        /*
+        Archivo<Avion> archivoAviones = new Archivo<>("baseAviones.json");
+
+        List<Avion> recuperarAvion = archivoAviones.rescatarAbstracto(Avion.class);
+        //List<Avion> recuperarAvion=new ArrayList<>();
+        boolean datos=archivoAviones.existenDatos(recuperarAvion);
+        if(datos){
+            Avion avionGold=new Gold(15000,5,Propulsion.REACCION,true,true);
+            Avion avionSilver=new Silver(5000,15,Propulsion.PISTONES,true);
+            Avion avionBonze=new Bronze(11000,40,Propulsion.PISTONES);
+            recuperarAvion.add(avionGold);
+            recuperarAvion.add(avionSilver);
+            recuperarAvion.add(avionBonze);
+
+            archivoAviones.guardarAbstracto(recuperarAvion,Avion.class);
+        }*/
 
 
 

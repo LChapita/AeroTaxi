@@ -10,11 +10,12 @@ public class Avion{
     public Avion() {
     }
 
-    public Avion(int combustible, int capacidadMAxima, Propulsion propulsion,float precio,float costoPorKilometro) {
+    public Avion(int combustible, int capacidadMAxima, Propulsion propulsion,float precio,float costoPorKilometro,String tipoAvion) {
         this.combustible = combustible;
         this.capacidadMAxima = capacidadMAxima;
         this.propulsion = propulsion;
         this.precio=precio;
+        this.tipoAvion=tipoAvion;
         this.costoPorKilometro=costoPorKilometro;
         this.velocidadMaxima = propulsion.getVelocidadMaxima();
 
@@ -57,6 +58,7 @@ public class Avion{
     @Override
     public String toString() {
         return "Avion{" +
+                tipoAvion+"{"+
                 "combustible=" + combustible +
                 ", capacidadMAxima=" + capacidadMAxima +
                 ", velocidadMaxima=" + velocidadMaxima +
@@ -70,5 +72,9 @@ public class Avion{
 
     public float getCostoPorKilometro() {
         return costoPorKilometro;
+    }
+
+    public String getTipoAvion() {
+        return tipoAvion;
     }
 }

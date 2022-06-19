@@ -322,7 +322,7 @@ public class RequestFlyMenu {
         int respuesta = 0;
         if (avionReservado != null) {
             Vuelo nuevoVuelo = new Vuelo(origen, destino, avionReservado, String.valueOf(fechaIngresada), cantidadPasajeros, usuario);
-            float costoVuelo=nuevoVuelo.calcularCosto(nuevoVuelo);
+            float costoVuelo = nuevoVuelo.calcularCosto(nuevoVuelo);
             System.out.println("Costo del vuelo: $" + costoVuelo);
             System.out.println("Confirmar= 1 " + "/ Cancelar= 0 ");
             do {
@@ -359,7 +359,7 @@ public class RequestFlyMenu {
                 }
             }
             if (!reservar && avion.getCapacidadMAxima() >= cantidadPasajeros) {
-                System.out.println("Avion ID: " + i + "---" + avion);
+                System.out.println("Avion ID: " + i + "---" +avion);//12-28-07-2022
                 disponible = true;
             }
             i++;
@@ -403,7 +403,7 @@ public class RequestFlyMenu {
         Vuelo vuelo = null;
 
         for (Vuelo aux : recuperarVuelos) {
-            if ((aux.getPartida().compareTo(fechaVuelo) == 0 )&& (aux.getCliente().getDni() == usuario.getDni())){
+            if ((aux.getPartida().compareTo(fechaVuelo) == 0) && (aux.getCliente().getDni() == usuario.getDni())) {
 
                 LocalDateTime fecha = LocalDateTime.parse(aux.getPartida());
                 //System.out.println(fecha);
@@ -411,7 +411,7 @@ public class RequestFlyMenu {
 
                 if (fecha.isAfter(LocalDateTime.now())) {
                     vuelo = aux;
-                }  else {
+                } else {
                     System.out.println("El vuelo debe cancelarse con al menos un dia de anticipacion.");
                 }
                 hallado = true;
@@ -492,7 +492,7 @@ public class RequestFlyMenu {
         return correcto;
 
     }*/
-    public static boolean SolicitarVuelo(List<User> recuperarUsuarios, List<Avion> recuperarAviones, List<Vuelo> recuperarVuelos, int dni,Archivo archivoVuelo) {
+    public static boolean SolicitarVuelo(List<User> recuperarUsuarios, List<Avion> recuperarAviones, List<Vuelo> recuperarVuelos, int dni, Archivo archivoVuelo) {
 
         boolean correcto = false;
         User nuevo = null;
@@ -500,11 +500,15 @@ public class RequestFlyMenu {
         if (existe) {
             nuevo = retornarUnUsuario(recuperarUsuarios, dni);
             Vuelo nuevoVuelo = sacarVuelo(nuevo, recuperarVuelos, recuperarAviones);
-            System.out.println(nuevoVuelo.toString());
-            List<Vuelo> auxVuelo=recuperarVuelos;///16-17-06-2022
+            if (nuevoVuelo != null) {
+                System.out.println(nuevoVuelo.toString());
+                List<Vuelo> auxVuelo = recuperarVuelos;///16-17-06-2022
 
-            auxVuelo.add(nuevoVuelo);
-            archivoVuelo.guardar(auxVuelo,Vuelo.class);
+                auxVuelo.add(nuevoVuelo);
+                archivoVuelo.guardar(auxVuelo, Vuelo.class);
+            }else {
+                System.out.println("Volviendo al menu.");
+            }
         }
         return correcto;
 

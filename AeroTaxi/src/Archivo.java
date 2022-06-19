@@ -1,5 +1,7 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
@@ -7,7 +9,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Archivo<T> {
+public class  Archivo<T> {
     private final String pricipalArchivo;
     private final ArrayList<T> baseArchivo;
 
@@ -108,7 +110,85 @@ public class Archivo<T> {
 
     //System.out.println("macaco");
 
+    public void guardarAbstracto(List<T> list,Class<T> tipoClase) {///objetos por separado
+        File archivo = new File(pricipalArchivo);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
+        if (!archivo.exists()) {
+            try {
+                archivo.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        BufferedWriter salida=null;
+
+        ///verificar repetidos antes de guardar
+        try {
+            ///como crear un nuevo archivo?
+            salida = new BufferedWriter(new FileWriter(archivo));
+
+            for (T aux : list) {//obligado
+                baseArchivo.add(aux);
+            }
+            gson.toJson(baseArchivo,salida);
+
+            //System.out.println("macaco");
+            salida.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    public List<T> rescatarAbstracto(Class<T> padre) {
+        File archivo = new File(pricipalArchivo);
+
+        List<T> rescatado=null;
+        Gson gson = new GsonBuilder().registerTypeHierarchyAdapter(List.class,padre).create();
+
+        Type colecctionType=TypeToken.getParameterized(List.class,padre).getType();
+
+        BufferedReader entrada = null;
+
+        try {
+            entrada = new BufferedReader(new FileReader(archivo));
+            for (T tipo:baseArchivo) {
+                if(tipo instanceof Gold){
+                    rescatado.add(tipo);
+                }else {
+                    if (tipo instanceof Silver){
+                        rescatado.add(tipo);
+                    }else {
+                        rescatado.add(tipo);
+                    }
+                }
+            }
+            rescatado = gson.fromJson(entrada, colecctionType);
+
+
+        } catch (IOException e) {
+            //System.out.println("error base de datos"+ tipoClase);///verificar bien que problema tiene al rescatar
+        } finally {
+            if(entrada!=null){
+                try{
+                    entrada.close();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return rescatado;
+    }
+
+    public Class<T> tipoClase(Class<T> clase){
+        Object objeto=null;
+        return (Class<T>) objeto;
+
+    }
 }
 
 
